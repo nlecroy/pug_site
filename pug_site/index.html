@@ -515,5 +515,178 @@
             }
         });
     </script>
+
+    <!-- Socket.io for real-time synchronization -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        // Initialize Socket.io connection
+        const socket = io();
+
+        // Receive initial state when connecting
+        socket.on('initial-state', (state) => {
+            console.log('Received initial state:', state);
+            // Apply any stored state from server
+            if (state.theme !== 'default') {
+                applyTheme(state.theme);
+            }
+        });
+
+        // Listen for admin updates from other users
+        socket.on('admin-update', (data) => {
+            console.log('Admin update received:', data);
+            applyAdminAction(data);
+        });
+
+        // Listen for new memes
+        socket.on('new-meme', (data) => {
+            console.log('New meme uploaded:', data.url);
+            // You can add notification or update meme gallery here
+        });
+
+        // Function to apply admin actions from other users
+        function applyAdminAction(data) {
+            switch(data.action) {
+                case 'dark-mode':
+                    document.body.style.background = 'linear-gradient(135deg, #1a1a2e, #16213e, #0f3460)';
+                    document.body.style.color = '#eee';
+                    break;
+                case 'rainbow-mode':
+                    document.body.style.background = 'linear-gradient(135deg, #ff0000, #ff7700, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3)';
+                    document.body.style.backgroundSize = '400% 400%';
+                    document.body.style.animation = 'rainbowShift 3s ease infinite';
+                    break;
+                case 'reset-theme':
+                    document.body.style.background = 'linear-gradient(135deg, #ffd89b 0%, #19547b 50%, #f093fb 100%)';
+                    document.body.style.backgroundSize = '400% 400%';
+                    document.body.style.animation = 'gradientShift 15s ease infinite';
+                    document.body.style.color = '#3d2817';
+                    break;
+                case 'confetti':
+                    triggerConfetti();
+                    break;
+                case 'pug-rain':
+                    triggerPugRain();
+                    break;
+                case 'matrix':
+                    triggerMatrix();
+                    break;
+                case 'text-big':
+                    makeTextBig();
+                    break;
+                case 'text-wobble':
+                    makeTextWobble();
+                    break;
+                case 'text-rainbow':
+                    makeTextRainbow();
+                    break;
+                case 'bg-color':
+                    changeBgColor();
+                    break;
+                case 'snow':
+                    addSnowEffect();
+                    break;
+                case 'clear-effects':
+                    clearEffectsLocal();
+                    break;
+            }
+        }
+
+        function applyTheme(theme) {
+            // Apply theme based on stored state
+            if (theme === 'dark') {
+                activateDarkMode();
+            } else if (theme === 'rainbow') {
+                activateRainbowMode();
+            }
+        }
+
+        // Broadcast admin actions to all users
+        function broadcastAdminAction(action, value = null) {
+            socket.emit('admin-action', { action, value });
+        }
+
+        // Update all admin functions to broadcast
+        const originalActivateDarkMode = activateDarkMode;
+        activateDarkMode = function() {
+            originalActivateDarkMode();
+            broadcastAdminAction('dark-mode');
+        };
+
+        const originalActivateRainbowMode = activateRainbowMode;
+        activateRainbowMode = function() {
+            originalActivateRainbowMode();
+            broadcastAdminAction('rainbow-mode');
+        };
+
+        const originalResetTheme = resetTheme;
+        resetTheme = function() {
+            originalResetTheme();
+            broadcastAdminAction('reset-theme');
+        };
+
+        const originalTriggerConfetti = triggerConfetti;
+        triggerConfetti = function() {
+            originalTriggerConfetti();
+            broadcastAdminAction('confetti');
+        };
+
+        const originalTriggerPugRain = triggerPugRain;
+        triggerPugRain = function() {
+            originalTriggerPugRain();
+            broadcastAdminAction('pug-rain');
+        };
+
+        const originalTriggerMatrix = triggerMatrix;
+        triggerMatrix = function() {
+            originalTriggerMatrix();
+            broadcastAdminAction('matrix');
+        };
+
+        const originalMakeTextBig = makeTextBig;
+        makeTextBig = function() {
+            originalMakeTextBig();
+            broadcastAdminAction('text-big');
+        };
+
+        const originalMakeTextWobble = makeTextWobble;
+        makeTextWobble = function() {
+            originalMakeTextWobble();
+            broadcastAdminAction('text-wobble');
+        };
+
+        const originalMakeTextRainbow = makeTextRainbow;
+        makeTextRainbow = function() {
+            originalMakeTextRainbow();
+            broadcastAdminAction('text-rainbow');
+        };
+
+        const originalChangeBgColor = changeBgColor;
+        changeBgColor = function() {
+            originalChangeBgColor();
+            broadcastAdminAction('bg-color');
+        };
+
+        const originalAddSnowEffect = addSnowEffect;
+        addSnowEffect = function() {
+            originalAddSnowEffect();
+            broadcastAdminAction('snow');
+        };
+
+        function clearEffectsLocal() {
+            document.querySelectorAll('.pug-rain').forEach(el => el.remove());
+            document.querySelectorAll('.wobble-text').forEach(el => el.classList.remove('wobble-text'));
+            document.querySelectorAll('.rainbow-text').forEach(el => el.classList.remove('rainbow-text'));
+            document.querySelectorAll('*').forEach(el => {
+                el.style.animationPlayState = 'running';
+            });
+            resetTheme();
+        }
+
+        const originalClearEffects = clearEffects;
+        clearEffects = function() {
+            originalClearEffects();
+            broadcastAdminAction('clear-effects');
+        };
+    </script>
 </body>
 </html>
