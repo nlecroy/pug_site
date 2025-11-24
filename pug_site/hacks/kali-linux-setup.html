@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kali Linux Setup Guide - Pug Paradise</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #00ff00;
+            line-height: 1.8;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            padding: 3rem;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
+        }
+
+        h1 {
+            color: #00ff00;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px #00ff00;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 10px #00ff00; }
+            50% { text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00; }
+        }
+
+        .warning {
+            background: rgba(255, 0, 0, 0.1);
+            border: 2px solid #ff0000;
+            border-radius: 5px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            color: #ff6b6b;
+        }
+
+        .warning h3 {
+            color: #ff0000;
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            color: #00ffff;
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem 0;
+            border-bottom: 2px solid #00ffff;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            color: #ffff00;
+            font-size: 1.3rem;
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: #b0b0b0;
+        }
+
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+            color: #b0b0b0;
+        }
+
+        code {
+            background: rgba(0, 255, 0, 0.1);
+            color: #00ff00;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            border: 1px solid #00ff00;
+        }
+
+        .code-block {
+            background: #000;
+            border: 2px solid #00ff00;
+            border-radius: 5px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-block::before {
+            content: '$ ';
+            color: #00ff00;
+        }
+
+        .code-block code {
+            background: none;
+            border: none;
+            padding: 0;
+            color: #00ff00;
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 2rem auto;
+            display: block;
+        }
+
+        .nav-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.5);
+        }
+
+        .step {
+            background: rgba(0, 255, 255, 0.05);
+            border-left: 4px solid #00ffff;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .tip {
+            background: rgba(255, 255, 0, 0.05);
+            border-left: 4px solid #ffff00;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .tip::before {
+            content: '💡 TIP: ';
+            color: #ffff00;
+            font-weight: bold;
+        }
+
+        a {
+            color: #00ffff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .pug-icon {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="pug-icon">🐶💻</div>
+        <h1>Kali Linux Setup Guide</h1>
+
+        <div class="warning">
+            <h3>⚠️ IMPORTANT LEGAL NOTICE</h3>
+            <p><strong>This guide is for EDUCATIONAL PURPOSES ONLY.</strong></p>
+            <p>Kali Linux is designed for authorized security testing, penetration testing, digital forensics, and security research. Only use these tools on:</p>
+            <ul>
+                <li>Systems you own</li>
+                <li>Systems you have explicit written permission to test</li>
+                <li>Authorized penetration testing engagements</li>
+                <li>CTF (Capture The Flag) competitions</li>
+                <li>Educational lab environments</li>
+            </ul>
+            <p><strong>Unauthorized access to computer systems is illegal and can result in criminal prosecution.</strong></p>
+        </div>
+
+        <h2>What is Kali Linux?</h2>
+        <p>Kali Linux is a Debian-based Linux distribution designed for advanced penetration testing and security auditing. It comes pre-installed with over 600 security and penetration testing tools.</p>
+
+        <h2>Installation Methods</h2>
+
+        <h3>Method 1: VirtualBox Installation (Recommended for Beginners)</h3>
+
+        <div class="step">
+            <h4>Step 1: Download VirtualBox</h4>
+            <ol>
+                <li>Visit <a href="https://www.virtualbox.org" target="_blank">https://www.virtualbox.org</a></li>
+                <li>Download VirtualBox for your operating system (Windows, macOS, or Linux)</li>
+                <li>Install VirtualBox following the installation wizard</li>
+            </ol>
+        </div>
+
+        <div class="step">
+            <h4>Step 2: Download Kali Linux</h4>
+            <ol>
+                <li>Visit <a href="https://www.kali.org/get-kali/" target="_blank">https://www.kali.org/get-kali/</a></li>
+                <li>Download the "Pre-built Virtual Machines" version for VirtualBox</li>
+                <li>Choose the 64-bit version (recommended)</li>
+                <li>Extract the downloaded .7z file (you may need 7-Zip)</li>
+            </ol>
+        </div>
+
+        <div class="step">
+            <h4>Step 3: Import Kali Linux into VirtualBox</h4>
+            <ol>
+                <li>Open VirtualBox</li>
+                <li>Click "File" → "Import Appliance"</li>
+                <li>Browse to the extracted .vbox file</li>
+                <li>Click "Next" and then "Import"</li>
+                <li>Wait for the import to complete (may take several minutes)</li>
+            </ol>
+        </div>
+
+        <div class="step">
+            <h4>Step 4: Configure Virtual Machine Settings</h4>
+            <ol>
+                <li>Select your Kali VM and click "Settings"</li>
+                <li><strong>System</strong>: Allocate at least 2GB RAM (4GB recommended)</li>
+                <li><strong>Processor</strong>: Allocate at least 2 CPU cores</li>
+                <li><strong>Display</strong>: Enable 3D Acceleration and set Video Memory to 128MB</li>
+                <li><strong>Network</strong>: Set to "NAT" or "Bridged Adapter"</li>
+                <li>Click "OK" to save settings</li>
+            </ol>
+        </div>
+
+        <div class="step">
+            <h4>Step 5: Start Kali Linux</h4>
+            <ol>
+                <li>Select your Kali VM and click "Start"</li>
+                <li>Wait for Kali to boot up</li>
+                <li><strong>Default credentials:</strong>
+                    <div class="code-block"><code>Username: kali</code></div>
+                    <div class="code-block"><code>Password: kali</code></div>
+                </li>
+            </ol>
+        </div>
+
+        <div class="tip">
+            Change the default password immediately after first login using: <code>passwd</code>
+        </div>
+
+        <h3>Method 2: USB Bootable Installation</h3>
+
+        <div class="step">
+            <h4>Step 1: Download Kali Linux ISO</h4>
+            <ol>
+                <li>Visit <a href="https://www.kali.org/get-kali/" target="_blank">https://www.kali.org/get-kali/</a></li>
+                <li>Download "Installer Images" → Choose your architecture (usually 64-bit)</li>
+                <li>Download the ISO file (around 3-4 GB)</li>
+            </ol>
+        </div>
+
+        <div class="step">
+            <h4>Step 2: Create Bootable USB</h4>
+            <p><strong>Using Rufus (Windows):</strong></p>
+            <ol>
+                <li>Download Rufus from <a href="https://rufus.ie" target="_blank">https://rufus.ie</a></li>
+                <li>Insert a USB drive (minimum 8GB)</li>
+                <li>Open Rufus and select your USB device</li>
+                <li>Click "SELECT" and choose the Kali Linux ISO</li>
+                <li>Keep default settings and click "START"</li>
+                <li>Wait for the process to complete</li>
+            </ol>
+
+            <p><strong>Using Balena Etcher (Windows/Mac/Linux):</strong></p>
+            <ol>
+                <li>Download Etcher from <a href="https://www.balena.io/etcher/" target="_blank">https://www.balena.io/etcher/</a></li>
+                <li>Insert USB drive (minimum 8GB)</li>
+                <li>Open Etcher, select the Kali ISO, select your USB drive</li>
+                <li>Click "Flash!" and wait for completion</li>
+            </ol>
+        </div>
+
+        <div class="step">
+            <h4>Step 3: Boot from USB and Install</h4>
+            <ol>
+                <li>Insert the bootable USB into your computer</li>
+                <li>Restart and enter BIOS/UEFI (usually F2, F12, Del, or Esc key)</li>
+                <li>Change boot order to boot from USB first</li>
+                <li>Save and exit BIOS</li>
+                <li>Select "Graphical Install" from the Kali boot menu</li>
+                <li>Follow the installation wizard:
+                    <ul>
+                        <li>Select language, location, and keyboard</li>
+                        <li>Configure network (can skip if no internet)</li>
+                        <li>Set hostname and domain</li>
+                        <li>Create user account and password</li>
+                        <li>Partition disk (use guided partitioning for beginners)</li>
+                        <li>Wait for installation to complete</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <h2>Post-Installation Setup</h2>
+
+        <h3>1. Update System</h3>
+        <div class="code-block"><code>sudo apt update && sudo apt upgrade -y</code></div>
+
+        <h3>2. Update Kali Tools</h3>
+        <div class="code-block"><code>sudo apt dist-upgrade -y</code></div>
+
+        <h3>3. Install Additional Tools (Optional)</h3>
+        <div class="code-block"><code>sudo apt install kali-linux-everything</code></div>
+        <p style="color: #b0b0b0;"><em>Note: This installs ALL Kali tools and requires significant disk space (15+ GB)</em></p>
+
+        <h3>4. Configure Network Settings</h3>
+        <div class="code-block"><code>sudo nano /etc/network/interfaces</code></div>
+
+        <h3>5. Install Guest Additions (VirtualBox only)</h3>
+        <ol>
+            <li>In VirtualBox menu: Devices → Insert Guest Additions CD image</li>
+            <li>Open terminal and run:</li>
+        </ol>
+        <div class="code-block"><code>sudo apt install -y virtualbox-guest-x11</code></div>
+        <div class="code-block"><code>sudo reboot</code></div>
+
+        <h2>Essential First Commands</h2>
+
+        <h3>Check System Information</h3>
+        <div class="code-block"><code>uname -a</code></div>
+
+        <h3>Check Network Configuration</h3>
+        <div class="code-block"><code>ip addr show</code></div>
+        <div class="code-block"><code>ifconfig</code></div>
+
+        <h3>Start/Stop Network Services</h3>
+        <div class="code-block"><code>sudo systemctl start networking</code></div>
+        <div class="code-block"><code>sudo systemctl stop networking</code></div>
+
+        <h3>Check Available Tools</h3>
+        <div class="code-block"><code>ls /usr/share/kali-menu/</code></div>
+
+        <h2>Recommended Settings</h2>
+
+        <div class="tip">
+            Enable SSH for remote access (use with caution):
+            <div class="code-block"><code>sudo systemctl start ssh</code></div>
+            <div class="code-block"><code>sudo systemctl enable ssh</code></div>
+        </div>
+
+        <div class="tip">
+            Create snapshots regularly in VirtualBox before major changes or tool installations
+        </div>
+
+        <div class="tip">
+            Use a separate network segment or isolated network for security testing
+        </div>
+
+        <h2>Next Steps</h2>
+        <ul>
+            <li>Familiarize yourself with the terminal and basic Linux commands</li>
+            <li>Learn about network scanning tools like Nmap</li>
+            <li>Explore the pre-installed tools in the Kali menu</li>
+            <li>Set up a home lab environment for safe testing</li>
+            <li>Practice on legal platforms like Hack The Box, TryHackMe, or PentesterLab</li>
+        </ul>
+
+        <div class="warning">
+            <h3>Remember:</h3>
+            <p>Always use Kali Linux responsibly and legally. Never attempt to access systems without explicit authorization. Building your skills through legal platforms and authorized environments is the path to becoming a security professional.</p>
+        </div>
+
+        <button class="nav-button" onclick="window.location.href='../index.html'">Back to Home</button>
+        <button class="nav-button" onclick="window.location.href='nmap-commands.html'" style="background: linear-gradient(135deg, #4ecdc4, #44a08d);">Learn Nmap Commands →</button>
+    </div>
+</body>
+</html>
