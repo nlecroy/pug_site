@@ -303,6 +303,13 @@
                 <button class="add-button" onclick="addMeme()">Add Meme 🚀</button>
             </div>
             <p style="color: #666; font-size: 0.9rem;">💡 Tip: Right-click any image online → Copy image address → Paste here!</p>
+            <hr style="margin: 1.5rem 0; border: 1px solid #ddd;">
+            <h3 style="color: #ff6b35; margin-bottom: 1rem;">📤 Or Upload From Your Device</h3>
+            <div style="display: flex; gap: 1rem; align-items: center;">
+                <input type="file" id="memeFile" accept="image/*" class="meme-input" style="flex: 1;">
+                <button class="add-button" onclick="uploadMeme()">Upload 📸</button>
+            </div>
+            <p style="color: #666; font-size: 0.9rem; margin-top: 0.5rem;">🌐 Uploaded memes are synced to all users in real-time!</p>
         </div>
 
         <div style="text-align: center; margin: 1.5rem 0;">
@@ -630,6 +637,177 @@
         }
 
         loadMemes();
+
+        // Upload meme function
+        async function uploadMeme() {
+            const fileInput = document.getElementById('memeFile');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                alert('Please select an image file first!');
+                return;
+            }
+
+            // Check file size (max 10MB)
+            if (file.size > 10 * 1024 * 1024) {
+                alert('File is too large! Maximum size is 10MB.');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('meme', file);
+
+            try {
+                const response = await fetch('/api/upload-meme', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // Add to local memes array
+                    const captionInput = document.getElementById('memeCaption');
+                    const categoryInput = document.getElementById('memeCategory');
+
+                    const newMeme = {
+                        url: result.url,
+                        caption: captionInput.value.trim() || 'Untitled Meme',
+                        category: categoryInput.value,
+                        likes: 0,
+                        id: Date.now()
+                    };
+
+                    memes.unshift(newMeme);
+                    saveMemes();
+                    displayMemes();
+
+                    // Clear inputs
+                    fileInput.value = '';
+                    captionInput.value = '';
+                    categoryInput.value = 'funny';
+
+                    alert('🎉 Meme uploaded and synced to all users!');
+                } else {
+                    alert('Failed to upload meme. Please try again.');
+                }
+            } catch (error) {
+                console.error('Upload error:', error);
+                alert('Error uploading meme. Please try again.');
+            }
+        }
+
+        // Load server memes on page load
+        async function loadServerMemes() {
+            try {
+                const response = await fetch('/api/memes');
+                const data = await response.json();
+
+                if (data.memes && data.memes.length > 0) {
+                    // Merge server memes with local memes
+                    data.memes.forEach(url => {
+                        // Check if not already in memes array
+                        if (!memes.some(m => m.url === url)) {
+                            memes.push({
+                                url: url,
+                                caption: 'Uploaded Meme',
+                                category: 'funny',
+                                likes: 0,
+                                id: Date.now() + Math.random()
+                            });
+                        }
+                    });
+                    saveMemes();
+                    displayMemes();
+                }
+            } catch (error) {
+                console.error('Error loading server memes:', error);
+            }
+        }
+
+        // Load server memes
+        loadServerMemes();
+    </script>
+
+    <!-- Socket.io for real-time synchronization -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        // Initialize Socket.io connection
+        const socket = io();
+
+        // Listen for new memes from other users
+        socket.on('new-meme', (data) => {
+            console.log('New meme received from another user:', data.url);
+
+            // Add to memes array if not already present
+            if (!memes.some(m => m.url === data.url)) {
+                const newMeme = {
+                    url: data.url,
+                    caption: 'New Upload',
+                    category: 'funny',
+                    likes: 0,
+                    id: Date.now() + Math.random()
+                };
+
+                memes.unshift(newMeme);
+                saveMemes();
+                displayMemes();
+
+                // Show notification
+                showNotification('🎉 New meme added by another user!');
+            }
+        });
+
+        // Show notification function
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: linear-gradient(135deg, #4ecdc4, #44a6c6);
+                color: white;
+                padding: 1rem 2rem;
+                border-radius: 25px;
+                font-weight: bold;
+                z-index: 10000;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+                animation: slideIn 0.3s ease;
+            `;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Add animations for notifications
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            @keyframes slideOut {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
