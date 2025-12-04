@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donate - Pug Paradise</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .donate-header {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 230, 200, 0.95) 100%);
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            margin-bottom: 2rem;
+        }
+
+        .donate-header h1 {
+            font-size: 3rem;
+            background: linear-gradient(45deg, #ff6b35, #f093fb, #19547b);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: colorFlow 3s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        .donate-content {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .donate-content h2 {
+            color: #ff6b35;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .donate-content p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .donation-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .donation-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            color: white;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .donation-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .donation-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .donation-card p {
+            color: rgba(255,255,255,0.9);
+        }
+
+        .crypto-address {
+            background: rgba(0,0,0,0.2);
+            padding: 1rem;
+            border-radius: 10px;
+            font-family: monospace;
+            word-break: break-all;
+            margin-top: 1rem;
+        }
+
+        .pug-thanks {
+            text-align: center;
+            font-size: 4rem;
+            margin: 2rem 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <h1>🐶 PUG PARADISE</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#games">Pug Games</a></li>
+                <li><a href="other-games.html">Other Games</a></li>
+                <li><a href="index.html#hacks">Hacks</a></li>
+                <li><a href="memes.html">Memes</a></li>
+                <li><a href="chatroom.html">Chat</a></li>
+                <li><a href="donate.html">Donate</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="index.html#about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="donate-header">
+            <h1>💰 Support Pug Paradise 🐶</h1>
+            <p style="color: #666; font-size: 1.2rem;">Help keep the pugs happy and the site running!</p>
+        </div>
+
+        <div class="donate-content">
+            <p>Pug Paradise is a free, open-source project created with love for pug enthusiasts everywhere. Your donations help us:</p>
+
+            <ul style="color: #666; line-height: 2;">
+                <li>🎮 Add more awesome pug games</li>
+                <li>💬 Maintain the chat and community features</li>
+                <li>🔧 Keep the servers running smoothly</li>
+                <li>🎨 Create new content and features</li>
+                <li>🦴 Buy treats for our development pugs!</li>
+            </ul>
+
+            <h2>🎁 Donation Options</h2>
+
+            <div class="donation-options">
+                <div class="donation-card">
+                    <h3>💳 PayPal</h3>
+                    <p>Send donations via PayPal</p>
+                    <p style="margin-top: 1rem;"><strong>Email:</strong> donations@pugparadise.com</p>
+                </div>
+
+                <div class="donation-card">
+                    <h3>₿ Bitcoin</h3>
+                    <p>Support with cryptocurrency</p>
+                    <div class="crypto-address">
+                        1PugParadise123ABC
+                    </div>
+                </div>
+
+                <div class="donation-card">
+                    <h3>☕ Buy Me a Coffee</h3>
+                    <p>Support us on Ko-fi</p>
+                    <p style="margin-top: 1rem;"><strong>@pugparadise</strong></p>
+                </div>
+            </div>
+
+            <div class="pug-thanks">🐶💖</div>
+
+            <h2>🌟 Thank You!</h2>
+            <p>Every donation, no matter how small, helps keep Pug Paradise running and allows us to create more awesome content for the pug community. We are incredibly grateful for your support!</p>
+
+            <p><strong>Want to contribute in other ways?</strong></p>
+            <ul style="color: #666; line-height: 2;">
+                <li>🎨 Create and share pug memes</li>
+                <li>💬 Be active in our chat community</li>
+                <li>🐛 Report bugs and suggest features</li>
+                <li>📣 Share Pug Paradise with fellow pug lovers</li>
+            </ul>
+        </div>
+
+        <button class="back-button" onclick="window.location.href='index.html'" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 1rem 2rem; border-radius: 25px; font-size: 1rem; font-weight: bold; cursor: pointer; margin: 2rem auto; display: block;">
+            🏠 Back to Home
+        </button>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Pug Paradise. Made with pug love and HTML.</p>
+    </footer>
+</body>
+</html>

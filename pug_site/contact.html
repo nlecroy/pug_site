@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Pug Paradise</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .contact-header {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 230, 200, 0.95) 100%);
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            margin-bottom: 2rem;
+        }
+
+        .contact-header h1 {
+            font-size: 3rem;
+            background: linear-gradient(45deg, #ff6b35, #f093fb, #19547b);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: colorFlow 3s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        .contact-content {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .contact-content h2 {
+            color: #ff6b35;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-content p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .contact-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .contact-card {
+            background: linear-gradient(135deg, #4ecdc4, #44a6c6);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .contact-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .contact-card p {
+            color: rgba(255,255,255,0.9);
+        }
+
+        .contact-card a {
+            color: white;
+            text-decoration: underline;
+        }
+
+        .contact-form {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #4ecdc4;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-button {
+            background: linear-gradient(135deg, #ff6b35, #f093fb);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <h1>🐶 PUG PARADISE</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#games">Pug Games</a></li>
+                <li><a href="other-games.html">Other Games</a></li>
+                <li><a href="index.html#hacks">Hacks</a></li>
+                <li><a href="memes.html">Memes</a></li>
+                <li><a href="chatroom.html">Chat</a></li>
+                <li><a href="donate.html">Donate</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="index.html#about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="contact-header">
+            <h1>📧 Get in Touch 🐶</h1>
+            <p style="color: #666; font-size: 1.2rem;">We'd love to hear from you!</p>
+        </div>
+
+        <div class="contact-content">
+            <p>Have questions, suggestions, or just want to chat about pugs? Reach out to us using any of the methods below!</p>
+
+            <div class="contact-methods">
+                <div class="contact-card">
+                    <h3>📧 Email</h3>
+                    <p>Send us an email</p>
+                    <a href="mailto:hello@pugparadise.com">hello@pugparadise.com</a>
+                </div>
+
+                <div class="contact-card">
+                    <h3>💬 Discord</h3>
+                    <p>Join our community</p>
+                    <p><strong>discord.gg/pugparadise</strong></p>
+                </div>
+
+                <div class="contact-card">
+                    <h3>🐦 Twitter</h3>
+                    <p>Follow us on Twitter</p>
+                    <a href="https://twitter.com/pugparadise" target="_blank">@pugparadise</a>
+                </div>
+
+                <div class="contact-card">
+                    <h3>💻 GitHub</h3>
+                    <p>Contribute to our code</p>
+                    <a href="https://github.com/pugparadise" target="_blank">github.com/pugparadise</a>
+                </div>
+            </div>
+
+            <h2>📝 Send Us a Message</h2>
+
+            <div class="contact-form">
+                <form id="contactForm" onsubmit="handleSubmit(event)">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" required placeholder="Enter your name...">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Your Email</label>
+                        <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" required placeholder="What's this about?">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" required placeholder="Tell us what's on your mind..."></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-button">Send Message 🚀</button>
+                </form>
+            </div>
+
+            <h2>🌟 Frequently Asked Questions</h2>
+
+            <div style="margin-top: 1.5rem;">
+                <h3 style="color: #ff6b35;">How can I add my own games?</h3>
+                <p>Contact us with your game idea! We love community contributions.</p>
+
+                <h3 style="color: #ff6b35;">Can I report bugs?</h3>
+                <p>Yes! Please use the contact form above or submit an issue on our GitHub.</p>
+
+                <h3 style="color: #ff6b35;">How do I get unbanned from chat?</h3>
+                <p>Chat bans are permanent for inappropriate language. Please follow our community guidelines.</p>
+
+                <h3 style="color: #ff6b35;">Can I use your code for my own project?</h3>
+                <p>Yes! Pug Paradise is open source. Check our GitHub for licensing details.</p>
+            </div>
+        </div>
+
+        <button class="back-button" onclick="window.location.href='index.html'" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 1rem 2rem; border-radius: 25px; font-size: 1rem; font-weight: bold; cursor: pointer; margin: 2rem auto; display: block;">
+            🏠 Back to Home
+        </button>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Pug Paradise. Made with pug love and HTML.</p>
+    </footer>
+
+    <script>
+        function handleSubmit(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+
+            // For now, just show a success message
+            // In production, you'd send this to a backend server
+            alert(`Thanks for reaching out, ${name}! We'll get back to you soon at ${email}. 🐶\n\nYour message has been received!`);
+
+            // Reset form
+            document.getElementById('contactForm').reset();
+        }
+    </script>
+</body>
+</html>
