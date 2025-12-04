@@ -362,7 +362,30 @@
         <p>&copy; 2025 Pug Paradise. Made with pug love and HTML.</p>
     </footer>
 
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
     <script>
+        // Firebase Configuration
+        // TODO: Replace with your actual Firebase project credentials
+        // Get these from: Firebase Console > Project Settings > Your apps > SDK setup and configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBXN7kZ3qY-9jP8yJxD5mH0wL2vF4nK6tE",
+            authDomain: "pug-paradise.firebaseapp.com",
+            databaseURL: "https://pug-paradise-default-rtdb.firebaseio.com",
+            projectId: "pug-paradise",
+            storageBucket: "pug-paradise.appspot.com",
+            messagingSenderId: "123456789012",
+            appId: "1:123456789012:web:abcdef123456"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const memesRef = database.ref('memes');
+        const likesRef = database.ref('likes');
+
         let memes = [];
         let currentFilter = 'all';
         let likedMemes = new Set();
@@ -373,29 +396,49 @@
         const defaultMemes = [];
 
         function loadMemes() {
-            const saved = localStorage.getItem('pugMemes');
-            if (saved) {
-                memes = JSON.parse(saved);
-            } else {
-                memes = [...defaultMemes];
-                saveMemes();
-            }
+            // Set up real-time listener for memes
+            memesRef.on('value', (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    // Convert Firebase object to array
+                    memes = Object.keys(data).map(key => ({
+                        ...data[key],
+                        id: parseInt(key)
+                    }));
+                } else {
+                    memes = [...defaultMemes];
+                }
+                displayMemes();
+            });
 
-            // Load liked memes
-            const savedLikes = localStorage.getItem('likedMemes');
-            if (savedLikes) {
-                likedMemes = new Set(JSON.parse(savedLikes));
-            }
-
-            displayMemes();
+            // Set up real-time listener for likes
+            likesRef.on('value', (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    likedMemes = new Set(Object.keys(data).map(k => parseInt(k)));
+                } else {
+                    likedMemes = new Set();
+                }
+                displayMemes();
+            });
         }
 
         function saveMemes() {
-            localStorage.setItem('pugMemes', JSON.stringify(memes));
+            // Convert memes array to object with IDs as keys
+            const memesObject = {};
+            memes.forEach(meme => {
+                memesObject[meme.id] = meme;
+            });
+            memesRef.set(memesObject);
         }
 
         function saveLikedMemes() {
-            localStorage.setItem('likedMemes', JSON.stringify([...likedMemes]));
+            // Convert likedMemes set to object
+            const likesObject = {};
+            likedMemes.forEach(id => {
+                likesObject[id] = true;
+            });
+            likesRef.set(likesObject);
         }
 
         function addMeme() {
