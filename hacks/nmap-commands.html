@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Essential Nmap Commands - Pug Paradise</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #00ff00;
+            line-height: 1.8;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            padding: 3rem;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
+        }
+
+        h1 {
+            color: #00ff00;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px #00ff00;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 10px #00ff00; }
+            50% { text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00; }
+        }
+
+        .warning {
+            background: rgba(255, 0, 0, 0.1);
+            border: 2px solid #ff0000;
+            border-radius: 5px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            color: #ff6b6b;
+        }
+
+        .warning h3 {
+            color: #ff0000;
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            color: #00ffff;
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem 0;
+            border-bottom: 2px solid #00ffff;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            color: #ffff00;
+            font-size: 1.3rem;
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        h4 {
+            color: #ff6b35;
+            font-size: 1.1rem;
+            margin: 1rem 0 0.5rem 0;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: #b0b0b0;
+        }
+
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+            color: #b0b0b0;
+        }
+
+        code {
+            background: rgba(0, 255, 0, 0.1);
+            color: #00ff00;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            border: 1px solid #00ff00;
+        }
+
+        .command-block {
+            background: #000;
+            border: 2px solid #00ff00;
+            border-radius: 5px;
+            padding: 1rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .command-block .cmd {
+            color: #00ff00;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .command-block .cmd::before {
+            content: '$ ';
+            color: #00ffff;
+            font-weight: bold;
+        }
+
+        .command-block .description {
+            color: #888;
+            font-size: 0.9rem;
+            margin-left: 1rem;
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 1rem 0.5rem;
+            display: inline-block;
+        }
+
+        .nav-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.5);
+        }
+
+        .category {
+            background: rgba(0, 255, 255, 0.05);
+            border-left: 4px solid #00ffff;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .tip {
+            background: rgba(255, 255, 0, 0.05);
+            border-left: 4px solid #ffff00;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .tip::before {
+            content: '💡 TIP: ';
+            color: #ffff00;
+            font-weight: bold;
+        }
+
+        .example {
+            background: rgba(240, 147, 251, 0.05);
+            border-left: 4px solid #f093fb;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .example::before {
+            content: '📋 EXAMPLE: ';
+            color: #f093fb;
+            font-weight: bold;
+        }
+
+        a {
+            color: #00ffff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .pug-icon {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        th, td {
+            border: 1px solid #00ff00;
+            padding: 0.75rem;
+            text-align: left;
+        }
+
+        th {
+            background: rgba(0, 255, 0, 0.1);
+            color: #00ff00;
+        }
+
+        td {
+            color: #b0b0b0;
+        }
+
+        .flag {
+            color: #00ffff;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="pug-icon">🐶🔍</div>
+        <h1>Essential Nmap Commands</h1>
+
+        <div class="warning">
+            <h3>⚠️ LEGAL & ETHICAL USE ONLY</h3>
+            <p><strong>This guide is for EDUCATIONAL and AUTHORIZED TESTING ONLY.</strong></p>
+            <p>Nmap is a powerful network scanner. Only use it on:</p>
+            <ul>
+                <li>Your own networks and systems</li>
+                <li>Systems you have explicit written permission to scan</li>
+                <li>Authorized penetration testing engagements</li>
+                <li>Lab environments and CTF challenges</li>
+            </ul>
+            <p><strong>Unauthorized network scanning is illegal and unethical. Always obtain permission before scanning any network or system.</strong></p>
+        </div>
+
+        <h2>What is Nmap?</h2>
+        <p>Nmap (Network Mapper) is a free, open-source tool for network discovery and security auditing. It's used to discover hosts, services, operating systems, and vulnerabilities on a network.</p>
+
+        <h2>Basic Syntax</h2>
+        <div class="command-block">
+            <span class="cmd">nmap [Scan Type] [Options] {target}</span>
+        </div>
+
+        <h2>Target Specification</h2>
+        <div class="category">
+            <h4>Single IP</h4>
+            <div class="command-block">
+                <span class="cmd">nmap 192.168.1.1</span>
+            </div>
+
+            <h4>Hostname</h4>
+            <div class="command-block">
+                <span class="cmd">nmap scanme.nmap.org</span>
+            </div>
+
+            <h4>IP Range</h4>
+            <div class="command-block">
+                <span class="cmd">nmap 192.168.1.1-254</span>
+            </div>
+
+            <h4>Subnet/CIDR Notation</h4>
+            <div class="command-block">
+                <span class="cmd">nmap 192.168.1.0/24</span>
+            </div>
+
+            <h4>Multiple Targets</h4>
+            <div class="command-block">
+                <span class="cmd">nmap 192.168.1.1 192.168.1.5 192.168.1.10</span>
+            </div>
+
+            <h4>From File</h4>
+            <div class="command-block">
+                <span class="cmd">nmap -iL targets.txt</span>
+            </div>
+        </div>
+
+        <h2>Basic Scan Types</h2>
+
+        <div class="category">
+            <h3>1. Ping Scan (Host Discovery)</h3>
+            <p>Quickly check which hosts are online without port scanning</p>
+            <div class="command-block">
+                <span class="cmd">nmap -sn 192.168.1.0/24</span>
+                <div class="description">Ping scan only, no port scan</div>
+            </div>
+
+            <h3>2. Quick Scan</h3>
+            <p>Scan the 100 most common ports</p>
+            <div class="command-block">
+                <span class="cmd">nmap -F 192.168.1.1</span>
+                <div class="description">Fast scan of top 100 ports</div>
+            </div>
+
+            <h3>3. Standard Scan</h3>
+            <p>Scan the 1000 most common ports (default)</p>
+            <div class="command-block">
+                <span class="cmd">nmap 192.168.1.1</span>
+                <div class="description">Default scan of top 1000 ports</div>
+            </div>
+
+            <h3>4. All Ports Scan</h3>
+            <p>Scan all 65,535 TCP ports</p>
+            <div class="command-block">
+                <span class="cmd">nmap -p- 192.168.1.1</span>
+                <div class="description">Scan all ports (takes longer)</div>
+            </div>
+
+            <h3>5. Specific Port(s)</h3>
+            <div class="command-block">
+                <span class="cmd">nmap -p 80,443 192.168.1.1</span>
+                <div class="description">Scan specific ports (HTTP & HTTPS)</div>
+            </div>
+            <div class="command-block">
+                <span class="cmd">nmap -p 1-100 192.168.1.1</span>
+                <div class="description">Scan port range 1-100</div>
+            </div>
+        </div>
+
+        <h2>Advanced Scan Types</h2>
+
+        <div class="category">
+            <h3>TCP SYN Scan (Stealth Scan)</h3>
+            <p>Most popular and default scan type. Fast and stealthy.</p>
+            <div class="command-block">
+                <span class="cmd">sudo nmap -sS 192.168.1.1</span>
+                <div class="description">TCP SYN scan (requires root/admin)</div>
+            </div>
+
+            <h3>TCP Connect Scan</h3>
+            <p>Completes full TCP connection. Slower but doesn't require privileges.</p>
+            <div class="command-block">
+                <span class="cmd">nmap -sT 192.168.1.1</span>
+                <div class="description">Full TCP connection scan</div>
+            </div>
+
+            <h3>UDP Scan</h3>
+            <p>Scan UDP ports (slower than TCP scans)</p>
+            <div class="command-block">
+                <span class="cmd">sudo nmap -sU 192.168.1.1</span>
+                <div class="description">UDP port scan</div>
+            </div>
+
+            <h3>Combined TCP and UDP</h3>
+            <div class="command-block">
+                <span class="cmd">sudo nmap -sS -sU -p T:80,443,U:53,161 192.168.1.1</span>
+                <div class="description">Scan specific TCP and UDP ports</div>
+            </div>
+        </div>
+
+        <h2>Service & Version Detection</h2>
+
+        <div class="category">
+            <h3>Service Version Detection</h3>
+            <div class="command-block">
+                <span class="cmd">nmap -sV 192.168.1.1</span>
+                <div class="description">Detect service versions</div>
+            </div>
+
+            <h3>Aggressive Version Detection</h3>
+            <div class="command-block">
+                <span class="cmd">nmap -sV --version-intensity 5 192.168.1.1</span>
+                <div class="description">Maximum version detection (slower)</div>
+            </div>
+
+            <h3>Light Version Detection</h3>
+            <div class="command-block">
+                <span class="cmd">nmap -sV --version-intensity 0 192.168.1.1</span>
+                <div class="description">Lighter/faster version detection</div>
+            </div>
+        </div>
+
+        <h2>OS Detection</h2>
+
+        <div class="category">
+            <h3>Enable OS Detection</h3>
+            <div class="command-block">
+                <span class="cmd">sudo nmap -O 192.168.1.1</span>
+                <div class="description">Detect operating system</div>
+            </div>
+
+            <h3>Aggressive OS Detection</h3>
+            <div class="command-block">
+                <span class="cmd">sudo nmap -O --osscan-guess 192.168.1.1</span>
+                <div class="description">Guess OS more aggressively</div>
+            </div>
+        </div>
+
+        <h2>Timing & Performance</h2>
+
+        <div class="category">
+            <p>Timing templates range from 0 (slowest/stealthiest) to 5 (fastest/loudest)</p>
+            <table>
+                <tr>
+                    <th>Template</th>
+                    <th>Speed</th>
+                    <th>Use Case</th>
+                </tr>
+                <tr>
+                    <td class="flag">-T0 (Paranoid)</td>
+                    <td>Very slow</td>
+                    <td>IDS evasion</td>
+                </tr>
+                <tr>
+                    <td class="flag">-T1 (Sneaky)</td>
+                    <td>Slow</td>
+                    <td>IDS evasion</td>
+                </tr>
+                <tr>
+                    <td class="flag">-T2 (Polite)</td>
+                    <td>Slower</td>
+                    <td>Less bandwidth usage</td>
+                </tr>
+                <tr>
+                    <td class="flag">-T3 (Normal)</td>
+                    <td>Default</td>
+                    <td>Standard scanning</td>
+                </tr>
+                <tr>
+                    <td class="flag">-T4 (Aggressive)</td>
+                    <td>Fast</td>
+                    <td>Fast networks</td>
+                </tr>
+                <tr>
+                    <td class="flag">-T5 (Insane)</td>
+                    <td>Very fast</td>
+                    <td>Extremely fast networks</td>
+                </tr>
+            </table>
+
+            <div class="example">
+                <div class="command-block">
+                    <span class="cmd">nmap -T4 192.168.1.1</span>
+                    <div class="description">Aggressive timing (recommended for most scans)</div>
+                </div>
+            </div>
+        </div>
+
+        <h2>Output Options</h2>
+
+        <div class="category">
+            <h3>Normal Output to File</h3>
+            <div class="command-block">
+                <span class="cmd">nmap -oN output.txt 192.168.1.1</span>
+            </div>
+
+            <h3>XML Output</h3>
+            <div class="command-block">
+                <span class="cmd">nmap -oX output.xml 192.168.1.1</span>
+            </div>
+
+            <h3>Grepable Output</h3>
+            <div class="command-block">
+                <span class="cmd">nmap -oG output.txt 192.168.1.1</span>
+            </div>
+
+            <h3>All Formats</h3>
+            <div class="command-block">
+                <span class="cmd">nmap -oA output 192.168.1.1</span>
+                <div class="description">Outputs to .nmap, .xml, and .gnmap files</div>
+            </div>
+        </div>
+
+        <h2>NSE Scripts (Nmap Scripting Engine)</h2>
+
+        <div class="category">
+            <h3>Default Scripts</h3>
+            <div class="command-block">
+                <span class="cmd">nmap -sC 192.168.1.1</span>
+                <div class="description">Run default NSE scripts</div>
+            </div>
+
+            <h3>Specific Script</h3>
+            <div class="command-block">
+                <span class="cmd">nmap --script=http-title 192.168.1.1</span>
+            </div>
+
+            <h3>Multiple Scripts</h3>
+            <div class="command-block">
+                <span class="cmd">nmap --script=http-enum,http-headers 192.168.1.1</span>
+            </div>
+
+            <h3>Script Categories</h3>
+            <div class="command-block">
+                <span class="cmd">nmap --script=vuln 192.168.1.1</span>
+                <div class="description">Run all vulnerability detection scripts</div>
+            </div>
+
+            <h4>Common Script Categories:</h4>
+            <ul>
+                <li><code>auth</code> - Authentication bypass scripts</li>
+                <li><code>default</code> - Default safe scripts</li>
+                <li><code>discovery</code> - Network discovery scripts</li>
+                <li><code>exploit</code> - Exploitation scripts</li>
+                <li><code>vuln</code> - Vulnerability detection</li>
+                <li><code>safe</code> - Scripts unlikely to crash services</li>
+            </ul>
+
+            <h3>List Available Scripts</h3>
+            <div class="command-block">
+                <span class="cmd">nmap --script-help all</span>
+            </div>
+
+            <div class="command-block">
+                <span class="cmd">ls /usr/share/nmap/scripts/</span>
+                <div class="description">View all NSE scripts on system</div>
+            </div>
+        </div>
+
+        <h2>Comprehensive Scan Examples</h2>
+
+        <div class="category">
+            <h3>Quick Network Overview</h3>
+            <div class="command-block">
+                <span class="cmd">nmap -sn -T4 192.168.1.0/24</span>
+                <div class="description">Fast host discovery on local network</div>
+            </div>
+
+            <h3>Standard Penetration Test Scan</h3>
+            <div class="command-block">
+                <span class="cmd">sudo nmap -sS -sV -O -T4 192.168.1.1</span>
+                <div class="description">SYN scan with service/OS detection</div>
+            </div>
+
+            <h3>Aggressive Comprehensive Scan</h3>
+            <div class="command-block">
+                <span class="cmd">sudo nmap -A -T4 192.168.1.1</span>
+                <div class="description">Enable OS detection, version detection, script scanning, and traceroute</div>
+            </div>
+
+            <h3>Full Scan with All Features</h3>
+            <div class="command-block">
+                <span class="cmd">sudo nmap -sS -sV -O -A -T4 -p- --script=vuln -oA full_scan 192.168.1.1</span>
+                <div class="description">Complete scan: all ports, service versions, OS, scripts, vulnerability detection, save all output</div>
+            </div>
+
+            <h3>Stealth Scan</h3>
+            <div class="command-block">
+                <span class="cmd">sudo nmap -sS -T2 -f --data-length 200 -D RND:10 192.168.1.1</span>
+                <div class="description">Slow, fragmented packets with decoys for stealth</div>
+            </div>
+        </div>
+
+        <h2>Common Use Cases</h2>
+
+        <div class="category">
+            <h3>Web Server Reconnaissance</h3>
+            <div class="command-block">
+                <span class="cmd">nmap -p 80,443 --script=http-enum,http-headers,http-methods 192.168.1.1</span>
+            </div>
+
+            <h3>Mail Server Scan</h3>
+            <div class="command-block">
+                <span class="cmd">nmap -p 25,465,587,110,995,143,993 -sV 192.168.1.1</span>
+            </div>
+
+            <h3>Database Server Scan</h3>
+            <div class="command-block">
+                <span class="cmd">nmap -p 1433,3306,5432,27017 -sV 192.168.1.1</span>
+                <div class="description">Scan common database ports (MSSQL, MySQL, PostgreSQL, MongoDB)</div>
+            </div>
+
+            <h3>Vulnerability Scan</h3>
+            <div class="command-block">
+                <span class="cmd">nmap -sV --script=vulscan,vuln 192.168.1.1</span>
+            </div>
+
+            <h3>SMB/Windows Share Enumeration</h3>
+            <div class="command-block">
+                <span class="cmd">nmap -p 445 --script=smb-enum-shares,smb-enum-users 192.168.1.1</span>
+            </div>
+        </div>
+
+        <h2>Useful Flags Reference</h2>
+
+        <table>
+            <tr>
+                <th>Flag</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td class="flag">-sS</td>
+                <td>TCP SYN scan (stealth)</td>
+            </tr>
+            <tr>
+                <td class="flag">-sT</td>
+                <td>TCP connect scan</td>
+            </tr>
+            <tr>
+                <td class="flag">-sU</td>
+                <td>UDP scan</td>
+            </tr>
+            <tr>
+                <td class="flag">-sV</td>
+                <td>Service version detection</td>
+            </tr>
+            <tr>
+                <td class="flag">-O</td>
+                <td>OS detection</td>
+            </tr>
+            <tr>
+                <td class="flag">-A</td>
+                <td>Aggressive (OS, version, scripts, traceroute)</td>
+            </tr>
+            <tr>
+                <td class="flag">-p</td>
+                <td>Specify ports</td>
+            </tr>
+            <tr>
+                <td class="flag">-p-</td>
+                <td>Scan all ports</td>
+            </tr>
+            <tr>
+                <td class="flag">-F</td>
+                <td>Fast scan (top 100 ports)</td>
+            </tr>
+            <tr>
+                <td class="flag">-T0-T5</td>
+                <td>Timing template</td>
+            </tr>
+            <tr>
+                <td class="flag">-v</td>
+                <td>Verbose output</td>
+            </tr>
+            <tr>
+                <td class="flag">-vv</td>
+                <td>Very verbose</td>
+            </tr>
+            <tr>
+                <td class="flag">-oN</td>
+                <td>Normal output to file</td>
+            </tr>
+            <tr>
+                <td class="flag">-oX</td>
+                <td>XML output</td>
+            </tr>
+            <tr>
+                <td class="flag">-oG</td>
+                <td>Grepable output</td>
+            </tr>
+            <tr>
+                <td class="flag">-oA</td>
+                <td>All output formats</td>
+            </tr>
+            <tr>
+                <td class="flag">--script</td>
+                <td>NSE script execution</td>
+            </tr>
+            <tr>
+                <td class="flag">-Pn</td>
+                <td>Skip host discovery (treat all hosts as online)</td>
+            </tr>
+            <tr>
+                <td class="flag">-n</td>
+                <td>No DNS resolution</td>
+            </tr>
+            <tr>
+                <td class="flag">-R</td>
+                <td>Always resolve DNS</td>
+            </tr>
+        </table>
+
+        <h2>Tips & Best Practices</h2>
+
+        <div class="tip">
+            Always start with a ping sweep (<code>-sn</code>) to find live hosts before doing detailed scans
+        </div>
+
+        <div class="tip">
+            Use <code>-v</code> or <code>-vv</code> for verbose output to see progress during long scans
+        </div>
+
+        <div class="tip">
+            Save your scan results with <code>-oA</code> for documentation and later analysis
+        </div>
+
+        <div class="tip">
+            Combine flags for efficiency: <code>sudo nmap -sS -sV -O -A -T4 -oA output target</code>
+        </div>
+
+        <div class="tip">
+            Use <code>sudo</code> or run as administrator for SYN scans and OS detection
+        </div>
+
+        <div class="tip">
+            Test on <a href="http://scanme.nmap.org" target="_blank">scanme.nmap.org</a> - a server specifically set up for testing Nmap
+        </div>
+
+        <h2>Legal Scanning Practice Sites</h2>
+        <ul>
+            <li><a href="http://scanme.nmap.org" target="_blank">scanme.nmap.org</a> - Official Nmap test server</li>
+            <li><a href="https://hackthebox.eu" target="_blank">Hack The Box</a> - Penetration testing labs</li>
+            <li><a href="https://tryhackme.com" target="_blank">TryHackMe</a> - Guided cybersecurity training</li>
+            <li><a href="https://www.vulnhub.com" target="_blank">VulnHub</a> - Vulnerable VMs for practice</li>
+            <li><a href="https://pentesterlab.com" target="_blank">PentesterLab</a> - Hands-on pentesting exercises</li>
+        </ul>
+
+        <div class="warning">
+            <h3>Remember:</h3>
+            <p><strong>Only scan systems you own or have explicit written permission to scan.</strong> Unauthorized scanning is illegal and unethical. Use Nmap responsibly to improve security, not compromise it.</p>
+        </div>
+
+        <div style="text-align: center; margin-top: 2rem;">
+            <button class="nav-button" onclick="window.location.href='kali-linux-setup.html'" style="background: linear-gradient(135deg, #4ecdc4, #44a08d);">← Kali Linux Setup</button>
+            <button class="nav-button" onclick="window.location.href='../index.html'">Back to Home</button>
+        </div>
+    </div>
+</body>
+</html>

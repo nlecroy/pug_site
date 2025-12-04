@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pug Runner - Pug Paradise</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            color: white;
+        }
+
+        .game-container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+        }
+
+        #gameCanvas {
+            border: 4px solid #667eea;
+            border-radius: 10px;
+            background: #87ceeb;
+            display: block;
+            margin: 1rem auto;
+        }
+
+        .controls {
+            margin: 1rem 0;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .score {
+            font-size: 1.5rem;
+            color: #667eea;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        .instructions {
+            color: #666;
+            margin: 1rem 0;
+            max-width: 600px;
+        }
+
+        a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .game-over {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        .game-over h2 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>🏃 Pug Runner 🦴</h1>
+        <div class="instructions">
+            Press SPACE or click to jump! Avoid obstacles and collect treats!
+        </div>
+        <div class="score">Score: <span id="score">0</span> | High Score: <span id="highScore">0</span></div>
+        <canvas id="gameCanvas" width="800" height="400"></canvas>
+        <div class="controls">
+            <button id="startBtn">Start Game</button>
+            <button onclick="window.location.href='../index.html'">Back to Home</button>
+        </div>
+    </div>
+
+    <div class="game-over" id="gameOver">
+        <h2>Game Over!</h2>
+        <p class="score">Final Score: <span id="finalScore">0</span></p>
+        <button onclick="restartGame()">Play Again</button>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreElement = document.getElementById('score');
+        const highScoreElement = document.getElementById('highScore');
+        const gameOverScreen = document.getElementById('gameOver');
+        const finalScoreElement = document.getElementById('finalScore');
+        const startBtn = document.getElementById('startBtn');
+
+        let gameRunning = false;
+        let score = 0;
+        let highScore = localStorage.getItem('pugRunnerHighScore') || 0;
+        let gameSpeed = 5;
+        let gravity = 0.6;
+
+        highScoreElement.textContent = highScore;
+
+        // Pug character
+        const pug = {
+            x: 50,
+            y: 300,
+            width: 40,
+            height: 40,
+            velocityY: 0,
+            jumping: false,
+            draw() {
+                ctx.fillStyle = '#d4a574';
+                ctx.fillRect(this.x, this.y, this.width, this.height);
+                ctx.fillStyle = '#000';
+                ctx.fillRect(this.x + 10, this.y + 10, 5, 5);
+                ctx.fillRect(this.x + 25, this.y + 10, 5, 5);
+                ctx.fillRect(this.x + 15, this.y + 20, 10, 5);
+            },
+            jump() {
+                if (!this.jumping) {
+                    this.velocityY = -12;
+                    this.jumping = true;
+                }
+            },
+            update() {
+                this.velocityY += gravity;
+                this.y += this.velocityY;
+
+                if (this.y > 300) {
+                    this.y = 300;
+                    this.velocityY = 0;
+                    this.jumping = false;
+                }
+            }
+        };
+
+        // Obstacles
+        let obstacles = [];
+        let obstacleTimer = 0;
+
+        function createObstacle() {
+            const height = Math.random() * 50 + 30;
+            obstacles.push({
+                x: canvas.width,
+                y: 340 - height,
+                width: 30,
+                height: height,
+                passed: false
+            });
+        }
+
+        // Treats
+        let treats = [];
+        let treatTimer = 0;
+
+        function createTreat() {
+            treats.push({
+                x: canvas.width,
+                y: Math.random() * 200 + 100,
+                width: 20,
+                height: 20,
+                collected: false
+            });
+        }
+
+        function drawObstacles() {
+            ctx.fillStyle = '#8b4513';
+            obstacles.forEach(obstacle => {
+                ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
+            });
+        }
+
+        function drawTreats() {
+            treats.forEach(treat => {
+                if (!treat.collected) {
+                    ctx.fillStyle = '#ffd700';
+                    ctx.beginPath();
+                    ctx.arc(treat.x + 10, treat.y + 10, 10, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            });
+        }
+
+        function updateObstacles() {
+            obstacles.forEach((obstacle, index) => {
+                obstacle.x -= gameSpeed;
+
+                if (!obstacle.passed && obstacle.x + obstacle.width < pug.x) {
+                    obstacle.passed = true;
+                    score += 10;
+                    scoreElement.textContent = score;
+                }
+
+                if (obstacle.x + obstacle.width < 0) {
+                    obstacles.splice(index, 1);
+                }
+            });
+        }
+
+        function updateTreats() {
+            treats.forEach((treat, index) => {
+                treat.x -= gameSpeed;
+
+                if (!treat.collected &&
+                    pug.x < treat.x + treat.width &&
+                    pug.x + pug.width > treat.x &&
+                    pug.y < treat.y + treat.height &&
+                    pug.y + pug.height > treat.y) {
+                    treat.collected = true;
+                    score += 50;
+                    scoreElement.textContent = score;
+                }
+
+                if (treat.x + treat.width < 0) {
+                    treats.splice(index, 1);
+                }
+            });
+        }
+
+        function checkCollision() {
+            for (let obstacle of obstacles) {
+                if (pug.x < obstacle.x + obstacle.width &&
+                    pug.x + pug.width > obstacle.x &&
+                    pug.y < obstacle.y + obstacle.height &&
+                    pug.y + pug.height > obstacle.y) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function gameOver() {
+            gameRunning = false;
+            finalScoreElement.textContent = score;
+            gameOverScreen.style.display = 'block';
+
+            if (score > highScore) {
+                highScore = score;
+                localStorage.setItem('pugRunnerHighScore', highScore);
+                highScoreElement.textContent = highScore;
+            }
+        }
+
+        function gameLoop() {
+            if (!gameRunning) return;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw ground
+            ctx.fillStyle = '#90EE90';
+            ctx.fillRect(0, 0, canvas.width, 340);
+            ctx.fillStyle = '#8B4513';
+            ctx.fillRect(0, 340, canvas.width, 60);
+
+            pug.update();
+            pug.draw();
+
+            obstacleTimer++;
+            if (obstacleTimer > 100) {
+                createObstacle();
+                obstacleTimer = 0;
+            }
+
+            treatTimer++;
+            if (treatTimer > 150) {
+                createTreat();
+                treatTimer = 0;
+            }
+
+            updateObstacles();
+            updateTreats();
+            drawObstacles();
+            drawTreats();
+
+            if (checkCollision()) {
+                gameOver();
+                return;
+            }
+
+            gameSpeed = 5 + score / 200;
+
+            requestAnimationFrame(gameLoop);
+        }
+
+        function startGame() {
+            gameRunning = true;
+            score = 0;
+            scoreElement.textContent = score;
+            gameSpeed = 5;
+            obstacles = [];
+            treats = [];
+            obstacleTimer = 0;
+            treatTimer = 0;
+            pug.y = 300;
+            pug.velocityY = 0;
+            pug.jumping = false;
+            gameOverScreen.style.display = 'none';
+            startBtn.textContent = 'Restart';
+            gameLoop();
+        }
+
+        function restartGame() {
+            startGame();
+        }
+
+        startBtn.addEventListener('click', startGame);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' && gameRunning) {
+                e.preventDefault();
+                pug.jump();
+            }
+        });
+
+        canvas.addEventListener('click', () => {
+            if (gameRunning) {
+                pug.jump();
+            }
+        });
+    </script>
+</body>
+</html>

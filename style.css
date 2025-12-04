@@ -1,0 +1,694 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #ffd89b 0%, #19547b 50%, #f093fb 100%);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    color: #3d2817;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+header {
+    background: #5c4033;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo h1 {
+    color: #ffd700;
+    font-size: 1.8rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    animation: glow 2s ease-in-out infinite;
+}
+
+@keyframes glow {
+    0%, 100% { text-shadow: 2px 2px 4px rgba(0,0,0,0.3), 0 0 10px #ffd700; }
+    50% { text-shadow: 2px 2px 4px rgba(0,0,0,0.3), 0 0 20px #ffd700, 0 0 30px #ff6b35; }
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    font-size: 1.1rem;
+}
+
+.nav-links a:hover {
+    color: #ffd700;
+}
+
+.admin-button {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(102, 126, 234, 0.5);
+    animation: adminPulse 2s ease-in-out infinite;
+}
+
+.admin-button:hover {
+    transform: scale(1.1) rotate(15deg);
+    box-shadow: 0 5px 20px rgba(102, 126, 234, 0.8);
+}
+
+@keyframes adminPulse {
+    0%, 100% { box-shadow: 0 3px 10px rgba(102, 126, 234, 0.5); }
+    50% { box-shadow: 0 3px 20px rgba(255, 107, 53, 0.8), 0 0 30px rgba(240, 147, 251, 0.6); }
+}
+
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.hero {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 230, 200, 0.95) 100%);
+    border-radius: 20px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2), 0 0 40px rgba(255, 107, 53, 0.3);
+    margin-bottom: 3rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+    animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+.hero-content h2 {
+    font-size: 3rem;
+    background: linear-gradient(45deg, #ff6b35, #f093fb, #19547b);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+    animation: colorFlow 3s linear infinite;
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes colorFlow {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+}
+
+.tagline {
+    font-size: 1.3rem;
+    color: #7d5a3f;
+    margin-bottom: 2rem;
+}
+
+.pug-ascii {
+    font-family: monospace;
+    font-size: 1.2rem;
+    color: #8b6f47;
+    margin: 2rem 0;
+}
+
+.pug-ascii pre {
+    display: inline-block;
+    background: rgba(92, 64, 51, 0.1);
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    animation: pugBreath 3s ease-in-out infinite;
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes pugBreath {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.cta-button {
+    background: linear-gradient(45deg, #ff6b35, #f093fb);
+    color: white;
+    padding: 1rem 2.5rem;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    position: relative;
+    z-index: 1;
+    animation: buttonPulse 2s ease-in-out infinite;
+}
+
+@keyframes buttonPulse {
+    0%, 100% { box-shadow: 0 4px 10px rgba(0,0,0,0.2), 0 0 20px rgba(255, 107, 53, 0.4); }
+    50% { box-shadow: 0 6px 15px rgba(0,0,0,0.3), 0 0 40px rgba(240, 147, 251, 0.6); }
+}
+
+.cta-button:hover {
+    background: linear-gradient(45deg, #f093fb, #ff6b35);
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4), 0 0 50px rgba(255, 107, 53, 0.8);
+}
+
+.content-section {
+    padding: 3rem 0;
+    margin-bottom: 2rem;
+}
+
+.content-section h2 {
+    font-size: 2.5rem;
+    color: #5c4033;
+    text-align: center;
+    margin-bottom: 2rem;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.card h3 {
+    color: #5c4033;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.card p {
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+
+.play-button, .read-button {
+    background: linear-gradient(135deg, #4ecdc4, #44a08d);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(78, 205, 196, 0.4);
+}
+
+.play-button:hover, .read-button:hover {
+    background: linear-gradient(135deg, #44a08d, #4ecdc4);
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(78, 205, 196, 0.6);
+}
+
+.meme-gallery {
+    background: white;
+    padding: 3rem;
+    border-radius: 15px;
+    text-align: center;
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.meme-placeholder {
+    color: #999;
+}
+
+.meme-placeholder p {
+    font-size: 1.2rem;
+    margin: 1rem 0;
+}
+
+#about {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 3rem;
+    border-radius: 15px;
+    text-align: center;
+}
+
+#about p {
+    font-size: 1.2rem;
+    color: #666;
+    max-width: 800px;
+    margin: 2rem auto;
+    line-height: 1.8;
+}
+
+footer {
+    background: #5c4033;
+    color: white;
+    text-align: center;
+    padding: 2rem;
+    margin-top: 3rem;
+}
+
+.floating-elements {
+    position: relative;
+    height: 0;
+    z-index: 0;
+}
+
+.float-emoji {
+    position: absolute;
+    font-size: 2rem;
+    animation: float 6s ease-in-out infinite;
+    opacity: 0.6;
+}
+
+.float-emoji:nth-child(1) {
+    left: 10%;
+    animation-delay: 0s;
+    animation-duration: 5s;
+}
+
+.float-emoji:nth-child(2) {
+    right: 10%;
+    animation-delay: 1s;
+    animation-duration: 6s;
+}
+
+.float-emoji:nth-child(3) {
+    left: 50%;
+    animation-delay: 2s;
+    animation-duration: 7s;
+}
+
+.float-emoji.delay-1 {
+    left: 20%;
+    top: -20px;
+    animation-delay: 0.5s;
+    animation-duration: 6.5s;
+}
+
+.float-emoji.delay-2 {
+    right: 20%;
+    top: -30px;
+    animation-delay: 1.5s;
+    animation-duration: 5.5s;
+}
+
+.float-emoji.delay-3 {
+    left: 35%;
+    top: -40px;
+    animation-delay: 2.5s;
+    animation-duration: 6s;
+}
+
+.float-emoji.delay-4 {
+    right: 35%;
+    top: -25px;
+    animation-delay: 3s;
+    animation-duration: 7.5s;
+}
+
+.float-emoji.delay-5 {
+    left: 65%;
+    top: -35px;
+    animation-delay: 3.5s;
+    animation-duration: 8s;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-30px) rotate(5deg);
+    }
+    50% {
+        transform: translateY(-60px) rotate(-5deg);
+    }
+    75% {
+        transform: translateY(-30px) rotate(3deg);
+    }
+}
+
+.card {
+    background: linear-gradient(135deg, #ffffff 0%, #ffe8d6 100%);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    border: 2px solid transparent;
+}
+
+.card:hover {
+    transform: translateY(-5px) rotate(1deg);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25), 0 0 30px rgba(255, 107, 53, 0.3);
+    border: 2px solid rgba(255, 107, 53, 0.3);
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .hero-content h2 {
+        font-size: 2rem;
+    }
+
+    .card-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .float-emoji {
+        font-size: 1.5rem;
+    }
+}
+
+.card-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.games-section {
+    background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(240, 147, 251, 0.1));
+    border-radius: 20px;
+    padding: 3rem 2rem;
+}
+
+.hacks-section {
+    background: linear-gradient(135deg, rgba(25, 84, 123, 0.1), rgba(78, 205, 196, 0.1));
+    border-radius: 20px;
+    padding: 3rem 2rem;
+}
+
+.memes-section {
+    background: linear-gradient(135deg, rgba(240, 147, 251, 0.1), rgba(255, 216, 155, 0.1));
+    border-radius: 20px;
+    padding: 3rem 2rem;
+}
+
+.card-game1 {
+    border: 3px solid transparent;
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(135deg, #ff6b35, #f7971e) border-box;
+}
+
+.card-game2 {
+    border: 3px solid transparent;
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(135deg, #f093fb, #f5576c) border-box;
+}
+
+.card-game3 {
+    border: 3px solid transparent;
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(135deg, #4facfe, #00f2fe) border-box;
+}
+
+.card-game4 {
+    border: 3px solid transparent;
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(135deg, #667eea, #764ba2) border-box;
+}
+
+.card-hack1 {
+    border: 3px solid transparent;
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(135deg, #a8edea, #fed6e3) border-box;
+}
+
+.card-hack2 {
+    border: 3px solid transparent;
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(135deg, #ffecd2, #fcb69f) border-box;
+}
+
+.card-hack3 {
+    border: 3px solid transparent;
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(135deg, #ff9a9e, #fecfef) border-box;
+}
+
+.content-section h2 {
+    font-size: 2.5rem;
+    background: linear-gradient(45deg, #ff6b35, #f093fb, #19547b, #4ecdc4);
+    background-size: 300% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: rainbowFlow 4s linear infinite;
+    text-align: center;
+    margin-bottom: 2rem;
+    text-shadow: none;
+}
+
+@keyframes rainbowFlow {
+    0% { background-position: 0% center; }
+    100% { background-position: 300% center; }
+}
+
+.rainbow-text {
+    font-size: 1.5rem;
+    font-weight: bold;
+    background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: rainbow 3s linear infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes rainbow {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+}
+
+.meme-emojis {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    font-size: 2.5rem;
+}
+
+.meme-emojis span {
+    animation: spin 3s linear infinite;
+    display: inline-block;
+}
+
+.meme-emojis span:nth-child(1) { animation-delay: 0s; }
+.meme-emojis span:nth-child(2) { animation-delay: 0.2s; }
+.meme-emojis span:nth-child(3) { animation-delay: 0.4s; }
+.meme-emojis span:nth-child(4) { animation-delay: 0.6s; }
+.meme-emojis span:nth-child(5) { animation-delay: 0.8s; }
+
+@keyframes spin {
+    0%, 80%, 100% { transform: rotate(0deg) scale(1); }
+    40% { transform: rotate(360deg) scale(1.2); }
+}
+
+.tagline {
+    font-size: 1.3rem;
+    background: linear-gradient(45deg, #7d5a3f, #ff6b35, #f093fb);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: colorFlow 3s linear infinite;
+    margin-bottom: 2rem;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+    position: relative;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #ffd700, #ff6b35, #f093fb);
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.nav-links a:hover {
+    color: #ffd700;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.beta-tag {
+    display: inline-block;
+    background: linear-gradient(135deg, #ff6b35, #f093fb);
+    color: white;
+    font-size: 0.7rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 12px;
+    font-weight: bold;
+    vertical-align: middle;
+    margin-left: 0.5rem;
+    box-shadow: 0 2px 8px rgba(255, 107, 53, 0.4);
+    animation: betaPulse 2s ease-in-out infinite;
+}
+
+@keyframes betaPulse {
+    0%, 100% {
+        box-shadow: 0 2px 8px rgba(255, 107, 53, 0.4);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 3px 12px rgba(240, 147, 251, 0.6);
+        transform: scale(1.05);
+    }
+}
+
+.other-games-section {
+    background: linear-gradient(135deg, rgba(78, 205, 196, 0.1), rgba(102, 126, 234, 0.1));
+    border-radius: 20px;
+    padding: 3rem 2rem;
+}
+
+.section-subtitle {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #666;
+    margin-top: -1rem;
+    margin-bottom: 2rem;
+    font-style: italic;
+}
+
+.card-other1 {
+    border: 3px solid transparent;
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(135deg, #ffb347, #ffcc33) border-box;
+}
+
+.card-other2 {
+    border: 3px solid transparent;
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(135deg, #56ccf2, #2f80ed) border-box;
+}
+
+.card-other3 {
+    border: 3px solid transparent;
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(135deg, #f2994a, #f2c94c) border-box;
+}
+
+.card-other4 {
+    border: 3px solid transparent;
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(135deg, #ee9ca7, #ffdde1) border-box;
+}
+
+.card-other5 {
+    border: 3px solid transparent;
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(135deg, #42e695, #3bb2b8) border-box;
+}
+
+.card-other6 {
+    border: 3px solid transparent;
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(135deg, #c471f5, #fa71cd) border-box;
+}
+
+.card-other7 {
+    border: 3px solid transparent;
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(135deg, #fa709a, #fee140) border-box;
+}
+
+.card-other8 {
+    border: 3px solid transparent;
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(135deg, #30cfd0, #330867) border-box;
+}
+
+.card-other9 {
+    border: 3px solid transparent;
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(135deg, #a8ff78, #78ffd6) border-box;
+}
+
+.card-other10 {
+    border: 3px solid transparent;
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(135deg, #667eea, #764ba2) border-box;
+}
+
+.card-other11 {
+    border: 3px solid transparent;
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(135deg, #fbc2eb, #a6c1ee) border-box;
+}
+
+.card-other12 {
+    border: 3px solid transparent;
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(135deg, #fdcbf1, #e6dee9) border-box;
+}
