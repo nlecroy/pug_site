@@ -405,18 +405,29 @@
             measurementId: "G-2TBFS939SL"
         };
 
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
-        const usersRef = database.ref('users');
-        const friendRequestsRef = database.ref('friendRequests');
-        const messagesRef = database.ref('messages');
-        const bannedUsersRef = database.ref('bannedUsers');
+        // Initialize Firebase with fallback
+        let useFirebase = false;
+        let database, usersRef, friendRequestsRef, messagesRef, bannedUsersRef;
+
+        try {
+            firebase.initializeApp(firebaseConfig);
+            database = firebase.database();
+            usersRef = database.ref('users');
+            friendRequestsRef = database.ref('friendRequests');
+            messagesRef = database.ref('messages');
+            bannedUsersRef = database.ref('bannedUsers');
+            useFirebase = true;
+            console.log('✅ Chat using Firebase');
+        } catch (error) {
+            console.warn('⚠️ Firebase not available, using localStorage for chat:', error);
+            useFirebase = false;
+        }
 
         const CHAT_PASSWORD = 'LEON';
         let currentUser = null;
         let myFriends = new Set();
         let chatUnlocked = false;
+        let localMessages = [];
 
         // Curse words filter
         const curseWords = ['fuck', 'shit', 'bitch', 'ass', 'damn', 'hell', 'crap', 'bastard', 'dick', 'pussy', 'cock', 'asshole', 'motherfucker', 'fag', 'retard', 'nigger', 'cunt', 'whore', 'slut'];
@@ -440,21 +451,43 @@
 
         function checkIfBanned() {
             const userId = getUserId();
-            bannedUsersRef.child(userId).once('value', (snapshot) => {
-                if (snapshot.exists()) {
-                    document.getElementById('bannedScreen').style.display = 'flex';
-                    document.body.style.overflow = 'hidden';
-                }
-            });
+
+            if (useFirebase) {
+                bannedUsersRef.child(userId).once('value', (snapshot) => {
+                    if (snapshot.exists()) {
+                        document.getElementById('bannedScreen').style.display = 'flex';
+                        document.body.style.overflow = 'hidden';
+                    }
+                }).catch(() => {
+                    // Fallback to localStorage
+                    checkBanLocalStorage();
+                });
+            } else {
+                checkBanLocalStorage();
+            }
+        }
+
+        function checkBanLocalStorage() {
+            const banned = localStorage.getItem('pugParadiseBanned');
+            if (banned === 'true') {
+                document.getElementById('bannedScreen').style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
         }
 
         function banUser() {
             const userId = getUserId();
-            bannedUsersRef.child(userId).set({
-                name: currentUser,
-                bannedAt: Date.now(),
-                reason: 'Inappropriate language'
-            });
+
+            if (useFirebase) {
+                bannedUsersRef.child(userId).set({
+                    name: currentUser,
+                    bannedAt: Date.now(),
+                    reason: 'Inappropriate language'
+                });
+            }
+
+            // Always ban in localStorage too
+            localStorage.setItem('pugParadiseBanned', 'true');
             document.getElementById('bannedScreen').style.display = 'flex';
             document.body.style.overflow = 'hidden';
         }
@@ -551,6 +584,11 @@
         }
 
         function sendFriendRequest() {
+            if (!useFirebase) {
+                alert('Friends feature requires Firebase. Using local mode only.');
+                return;
+            }
+
             const friendName = document.getElementById('friendNameInput').value.trim();
             if (!friendName) {
                 alert('Please enter a friend\'s name!');
@@ -591,35 +629,44 @@
                     alert('Friend request sent to ' + friendName + '!');
                     document.getElementById('friendNameInput').value = '';
                 });
+            }).catch(() => {
+                alert('Friends feature requires Firebase connection.');
             });
         }
 
         function loadFriendRequests() {
             const userId = getUserId();
-            friendRequestsRef.child(userId).on('value', (snapshot) => {
-                const requests = snapshot.val();
-                const requestsDiv = document.getElementById('friendRequests');
+            const requestsDiv = document.getElementById('friendRequests');
 
-                if (!requests) {
-                    requestsDiv.innerHTML = '<p style="color: #666; font-size: 0.9rem;">No requests</p>';
-                    return;
-                }
+            if (useFirebase) {
+                friendRequestsRef.child(userId).on('value', (snapshot) => {
+                    const requests = snapshot.val();
 
-                const requestsHTML = Object.keys(requests).map(requestId => {
-                    const request = requests[requestId];
-                    return `
-                        <div class="request-item">
-                            <strong>${request.fromName}</strong> wants to be friends
-                            <div class="request-actions">
-                                <button class="btn btn-small btn-success" onclick="acceptFriendRequest('${requestId}', '${request.from}', '${request.fromName}')">Accept</button>
-                                <button class="btn btn-small btn-danger" onclick="declineFriendRequest('${requestId}')">Decline</button>
+                    if (!requests) {
+                        requestsDiv.innerHTML = '<p style="color: #666; font-size: 0.9rem;">No requests</p>';
+                        return;
+                    }
+
+                    const requestsHTML = Object.keys(requests).map(requestId => {
+                        const request = requests[requestId];
+                        return `
+                            <div class="request-item">
+                                <strong>${request.fromName}</strong> wants to be friends
+                                <div class="request-actions">
+                                    <button class="btn btn-small btn-success" onclick="acceptFriendRequest('${requestId}', '${request.from}', '${request.fromName}')">Accept</button>
+                                    <button class="btn btn-small btn-danger" onclick="declineFriendRequest('${requestId}')">Decline</button>
+                                </div>
                             </div>
-                        </div>
-                    `;
-                }).join('');
+                        `;
+                    }).join('');
 
-                requestsDiv.innerHTML = requestsHTML;
-            });
+                    requestsDiv.innerHTML = requestsHTML;
+                }).catch(() => {
+                    requestsDiv.innerHTML = '<p style="color: #666; font-size: 0.9rem;">Friends feature requires Firebase</p>';
+                });
+            } else {
+                requestsDiv.innerHTML = '<p style="color: #666; font-size: 0.9rem;">Friends feature requires Firebase</p>';
+            }
         }
 
         function acceptFriendRequest(requestId, friendId, friendName) {
@@ -663,10 +710,25 @@
         function loadMessages() {
             if (!chatUnlocked) return;
 
-            messagesRef.orderByChild('timestamp').limitToLast(50).on('child_added', (snapshot) => {
-                const message = snapshot.val();
-                displayMessage(message);
-            });
+            if (useFirebase) {
+                messagesRef.orderByChild('timestamp').limitToLast(50).on('child_added', (snapshot) => {
+                    const message = snapshot.val();
+                    displayMessage(message);
+                }).catch(() => {
+                    useFirebase = false;
+                    loadMessagesFromLocalStorage();
+                });
+            } else {
+                loadMessagesFromLocalStorage();
+            }
+        }
+
+        function loadMessagesFromLocalStorage() {
+            const saved = localStorage.getItem('pugChatMessages');
+            if (saved) {
+                localMessages = JSON.parse(saved);
+                localMessages.forEach(msg => displayMessage(msg));
+            }
         }
 
         function displayMessage(message) {
@@ -713,7 +775,15 @@
                 userId: getUserId()
             };
 
-            messagesRef.push(message);
+            if (useFirebase) {
+                messagesRef.push(message);
+            } else {
+                // Save to localStorage
+                localMessages.push(message);
+                localStorage.setItem('pugChatMessages', JSON.stringify(localMessages));
+                displayMessage(message);
+            }
+
             input.value = '';
         }
 
