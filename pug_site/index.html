@@ -56,7 +56,7 @@
                     <span class="float-emoji delay-4">🎨</span>
                     <span class="float-emoji delay-5">🎪</span>
                 </div>
-                <button class="cta-button">Explore the Pugverse ✨</button>
+                <button class="cta-button" onclick="showPugverseMenu()">Explore the Pugverse ✨</button>
             </div>
         </section>
 
@@ -140,6 +140,56 @@
     <footer>
         <p>&copy; 2025 Pug Paradise. Made with pug love and HTML.</p>
     </footer>
+
+    <!-- Pugverse Menu Modal -->
+    <div id="pugverseModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9999; justify-content: center; align-items: center;" onclick="closePugverseMenu()">
+        <div style="background: linear-gradient(135deg, #667eea, #764ba2); padding: 3rem; border-radius: 20px; max-width: 900px; width: 90%; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.5);" onclick="event.stopPropagation()">
+            <h2 style="color: white; margin-bottom: 0.5rem; font-size: 2.5rem;">🌟 Explore the Pugverse 🌟</h2>
+            <p style="color: rgba(255,255,255,0.9); margin-bottom: 2rem;">Your gateway to all things pug!</p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+                <div style="background: rgba(255,255,255,0.15); padding: 2rem; border-radius: 15px; cursor: pointer; transition: all 0.3s ease; border: 2px solid rgba(255,255,255,0.2);" onclick="window.location.href='#games'" onmouseover="this.style.transform='scale(1.05)'; this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.transform='scale(1)'; this.style.background='rgba(255,255,255,0.15)'">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🎮</div>
+                    <h3 style="color: white; margin-bottom: 0.5rem;">Pug Games</h3>
+                    <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">Play our pug-themed games</p>
+                </div>
+
+                <div style="background: rgba(255,255,255,0.15); padding: 2rem; border-radius: 15px; cursor: pointer; transition: all 0.3s ease; border: 2px solid rgba(255,255,255,0.2);" onclick="window.location.href='other-games.html'" onmouseover="this.style.transform='scale(1.05)'; this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.transform='scale(1)'; this.style.background='rgba(255,255,255,0.15)'">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🕹️</div>
+                    <h3 style="color: white; margin-bottom: 0.5rem;">Other Games</h3>
+                    <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">Classic web games</p>
+                </div>
+
+                <div style="background: rgba(255,255,255,0.15); padding: 2rem; border-radius: 15px; cursor: pointer; transition: all 0.3s ease; border: 2px solid rgba(255,255,255,0.2);" onclick="window.location.href='memes.html'" onmouseover="this.style.transform='scale(1.05)'; this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.transform='scale(1)'; this.style.background='rgba(255,255,255,0.15)'">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">😂</div>
+                    <h3 style="color: white; margin-bottom: 0.5rem;">Meme Gallery</h3>
+                    <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">Hilarious pug memes</p>
+                </div>
+
+                <div style="background: rgba(255,255,255,0.15); padding: 2rem; border-radius: 15px; cursor: pointer; transition: all 0.3s ease; border: 2px solid rgba(255,255,255,0.2);" onclick="window.location.href='chatroom.html'" onmouseover="this.style.transform='scale(1.05)'; this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.transform='scale(1)'; this.style.background='rgba(255,255,255,0.15)'">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">💬</div>
+                    <h3 style="color: white; margin-bottom: 0.5rem;">Chat Room</h3>
+                    <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">Chat with pug lovers</p>
+                </div>
+
+                <div style="background: rgba(255,255,255,0.15); padding: 2rem; border-radius: 15px; cursor: pointer; transition: all 0.3s ease; border: 2px solid rgba(255,255,255,0.2);" onclick="window.location.href='#hacks'" onmouseover="this.style.transform='scale(1.05)'; this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.transform='scale(1)'; this.style.background='rgba(255,255,255,0.15)'">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">💡</div>
+                    <h3 style="color: white; margin-bottom: 0.5rem;">Tech Guides</h3>
+                    <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">Learn security & tech</p>
+                </div>
+
+                <div style="background: rgba(255,255,255,0.15); padding: 2rem; border-radius: 15px; cursor: pointer; transition: all 0.3s ease; border: 2px solid rgba(255,255,255,0.2);" onclick="window.location.href='#about'" onmouseover="this.style.transform='scale(1.05)'; this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.transform='scale(1)'; this.style.background='rgba(255,255,255,0.15)'">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">ℹ️</div>
+                    <h3 style="color: white; margin-bottom: 0.5rem;">About</h3>
+                    <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">Learn about us</p>
+                </div>
+            </div>
+
+            <button onclick="closePugverseMenu()" style="background: linear-gradient(135deg, #ff6b6b, #ee5a6f); color: white; border: none; padding: 1rem 2rem; border-radius: 25px; font-size: 1rem; font-weight: bold; cursor: pointer;">
+                Close ✕
+            </button>
+        </div>
+    </div>
 
     <!-- Admin Login Modal -->
     <div id="adminLoginModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 10000; justify-content: center; align-items: center;">
@@ -281,6 +331,15 @@
 
     <script>
         const ADMIN_PASSWORD = 'PUGATTACK6767';
+
+        // Pugverse Menu Functions
+        function showPugverseMenu() {
+            document.getElementById('pugverseModal').style.display = 'flex';
+        }
+
+        function closePugverseMenu() {
+            document.getElementById('pugverseModal').style.display = 'none';
+        }
 
         function showAdminLogin() {
             document.getElementById('adminLoginModal').style.display = 'flex';
@@ -508,11 +567,12 @@
             alert('🧹 All effects cleared!');
         }
 
-        // Close admin panel with Escape key
+        // Close modals with Escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 closeAdminPanel();
                 closeAdminLogin();
+                closePugverseMenu();
             }
         });
     </script>
