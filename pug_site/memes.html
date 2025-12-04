@@ -380,10 +380,12 @@
         };
 
         // Initialize Firebase
+        console.log('🔥 Initializing Firebase...');
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
         const memesRef = database.ref('memes');
         const likesRef = database.ref('likes');
+        console.log('✅ Firebase initialized successfully!');
 
         let memes = [];
         let currentFilter = 'all';
@@ -395,8 +397,11 @@
         const defaultMemes = [];
 
         function loadMemes() {
+            console.log('🔥 Firebase: Attempting to connect to Realtime Database...');
+
             // Set up real-time listener for memes
             memesRef.on('value', (snapshot) => {
+                console.log('🔥 Firebase: Memes data received', snapshot.val());
                 const data = snapshot.val();
                 if (data) {
                     // Convert Firebase object to array
@@ -404,14 +409,20 @@
                         ...data[key],
                         id: parseInt(key)
                     }));
+                    console.log('✅ Firebase: Loaded', memes.length, 'memes');
                 } else {
                     memes = [...defaultMemes];
+                    console.log('ℹ️ Firebase: No memes in database, starting fresh');
                 }
                 displayMemes();
+            }, (error) => {
+                console.error('❌ Firebase Error (memes):', error);
+                alert('Firebase connection error: ' + error.message + '\n\nPlease check that Realtime Database is enabled in Firebase Console.');
             });
 
             // Set up real-time listener for likes
             likesRef.on('value', (snapshot) => {
+                console.log('🔥 Firebase: Likes data received', snapshot.val());
                 const data = snapshot.val();
                 if (data) {
                     likedMemes = new Set(Object.keys(data).map(k => parseInt(k)));
@@ -419,6 +430,8 @@
                     likedMemes = new Set();
                 }
                 displayMemes();
+            }, (error) => {
+                console.error('❌ Firebase Error (likes):', error);
             });
         }
 
@@ -428,7 +441,16 @@
             memes.forEach(meme => {
                 memesObject[meme.id] = meme;
             });
-            memesRef.set(memesObject);
+
+            console.log('💾 Firebase: Saving memes...', memesObject);
+            memesRef.set(memesObject)
+                .then(() => {
+                    console.log('✅ Firebase: Memes saved successfully!');
+                })
+                .catch((error) => {
+                    console.error('❌ Firebase: Error saving memes:', error);
+                    alert('Failed to save meme: ' + error.message);
+                });
         }
 
         function saveLikedMemes() {
