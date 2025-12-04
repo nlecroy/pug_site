@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Navigation Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-box {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        a {
+            display: block;
+            padding: 15px;
+            margin: 10px 0;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+        a:hover {
+            background: #0056b3;
+        }
+        .success {
+            background: #28a745;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🐶 Pug Paradise - Navigation Test</h1>
+
+    <div class="test-box">
+        <h2>Test All Pages</h2>
+        <p>Click each link below to test if the pages load:</p>
+
+        <a href="index.html">🏠 Home Page (index.html)</a>
+        <a href="memes.html">😂 Memes Page (memes.html)</a>
+        <a href="chatroom.html">💬 Chat Room (chatroom.html)</a>
+        <a href="other-games.html">🎮 Other Games (other-games.html)</a>
+    </div>
+
+    <div class="test-box">
+        <h2>File Check</h2>
+        <div id="fileCheck"></div>
+    </div>
+
+    <div class="test-box">
+        <h2>How to Run This Site</h2>
+        <p><strong>Option 1: Python (if installed):</strong></p>
+        <pre style="background: #2d2d2d; color: #f8f8f2; padding: 15px; border-radius: 5px; overflow-x: auto;">cd /home/user/pug_site/pug_site
+python3 -m http.server 8000</pre>
+        <p>Then open: <code>http://localhost:8000</code></p>
+
+        <p><strong>Option 2: Node.js/npx (if installed):</strong></p>
+        <pre style="background: #2d2d2d; color: #f8f8f2; padding: 15px; border-radius: 5px; overflow-x: auto;">cd /home/user/pug_site/pug_site
+npx serve</pre>
+
+        <p><strong>⚠️ Important:</strong> Don't open files directly (file:// protocol). Use a web server!</p>
+    </div>
+
+    <script>
+        // Check if files exist by trying to fetch them
+        const files = ['index.html', 'memes.html', 'chatroom.html', 'other-games.html'];
+        const checkDiv = document.getElementById('fileCheck');
+
+        files.forEach(file => {
+            fetch(file)
+                .then(response => {
+                    if (response.ok) {
+                        checkDiv.innerHTML += `<div class="success">✅ ${file} - Found!</div>`;
+                    } else {
+                        checkDiv.innerHTML += `<div style="background: #dc3545; color: white; padding: 10px; border-radius: 5px; margin: 10px 0;">❌ ${file} - Not found (${response.status})</div>`;
+                    }
+                })
+                .catch(error => {
+                    checkDiv.innerHTML += `<div style="background: #ffc107; padding: 10px; border-radius: 5px; margin: 10px 0;">⚠️ ${file} - Error checking (CORS or file:// protocol)</div>`;
+                });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Other Games - Pug Paradise</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .games-header {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 230, 200, 0.95) 100%);
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            margin-bottom: 3rem;
+        }
+
+        .games-header h1 {
+            font-size: 3rem;
+            background: linear-gradient(45deg, #ff6b35, #f093fb, #19547b);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: colorFlow 3s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        .games-header p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .credit {
+            font-size: 0.9rem;
+            color: #888;
+            font-style: italic;
+        }
+
+        .credit a {
+            color: #4ecdc4;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .credit a:hover {
+            text-decoration: underline;
+        }
+
+        .back-button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 2rem auto;
+            display: block;
+        }
+
+        .back-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.5);
+        }
+
+        .search-container {
+            text-align: center;
+            margin: 2rem auto;
+            max-width: 600px;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            font-size: 1.1rem;
+            border: 3px solid #4ecdc4;
+            border-radius: 50px;
+            background: white;
+            box-shadow: 0 3px 10px rgba(78, 205, 196, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus {
+            outline: none;
+            box-shadow: 0 5px 20px rgba(78, 205, 196, 0.5);
+            transform: scale(1.02);
+        }
+
+        .game-count {
+            text-align: center;
+            color: #666;
+            margin: 1rem 0 2rem 0;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <h1>🐶 PUG PARADISE</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#games">Pug Games</a></li>
+                <li><a href="other-games.html">Other Games</a></li>
+                <li><a href="index.html#hacks">Hacks</a></li>
+                <li><a href="memes.html">Memes</a></li>
+                <li><a href="chatroom.html">Chat</a></li>
+                <li><a href="index.html#about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="games-header">
+            <h1>🕹️ Other Awesome Games 🎮</h1>
+            <p>A curated collection of fun and popular web games</p>
+            <p class="credit">Games from <a href="https://github.com/Nintendoboi2222/games" target="_blank">nintendoboi2222's collection</a></p>
+        </div>
+
+        <div class="search-container">
+            <input type="text" class="search-box" id="searchBox" placeholder="🔍 Search games..." onkeyup="searchGames()">
+        </div>
+
+        <p class="game-count">Showing <span id="gameCount">12</span> games</p>
+
+        <section class="content-section other-games-section">
+            <div class="card-grid" id="gamesGrid">
+                <div class="card card-other1" data-name="2048">
+                    <div class="card-icon">🎯</div>
+                    <h3>2048</h3>
+                    <p>Combine tiles to reach 2048!</p>
+                    <button class="play-button" onclick="window.open('https://nintendoboi2222.github.io/games/2048/', '_blank')">Play Now 🎮</button>
+                </div>
+                <div class="card card-other2" data-name="flappy bird">
+                    <div class="card-icon">🐦</div>
+                    <h3>Flappy Bird</h3>
+                    <p>Navigate through pipes in this classic game</p>
+                    <button class="play-button" onclick="window.open('https://nintendoboi2222.github.io/games/flappy-bird/', '_blank')">Play Now 🎮</button>
+                </div>
+                <div class="card card-other3" data-name="cookie clicker">
+                    <div class="card-icon">🍪</div>
+                    <h3>Cookie Clicker</h3>
+                    <p>Click cookies and build your empire!</p>
+                    <button class="play-button" onclick="window.open('https://nintendoboi2222.github.io/games/cookie-clicker/', '_blank')">Play Now 🎮</button>
+                </div>
+                <div class="card card-other4" data-name="basketball stars">
+                    <div class="card-icon">🏀</div>
+                    <h3>Basketball Stars</h3>
+                    <p>Shoot hoops and become a basketball legend</p>
+                    <button class="play-button" onclick="window.open('https://nintendoboi2222.github.io/games/basketball-stars/', '_blank')">Play Now 🎮</button>
+                </div>
+                <div class="card card-other5" data-name="retro bowl">
+                    <div class="card-icon">🏈</div>
+                    <h3>Retro Bowl</h3>
+                    <p>Manage your team to football glory!</p>
+                    <button class="play-button" onclick="window.open('https://nintendoboi2222.github.io/games/retro-bowl/', '_blank')">Play Now 🎮</button>
+                </div>
+                <div class="card card-other6" data-name="tetris">
+                    <div class="card-icon">🧩</div>
+                    <h3>Tetris</h3>
+                    <p>The classic block-stacking puzzle game</p>
+                    <button class="play-button" onclick="window.open('https://nintendoboi2222.github.io/games/tetris/', '_blank')">Play Now 🎮</button>
+                </div>
+                <div class="card card-other7" data-name="drift hunters">
+                    <div class="card-icon">🏎️</div>
+                    <h3>Drift Hunters</h3>
+                    <p>Customize cars and master drifting!</p>
+                    <button class="play-button" onclick="window.open('https://nintendoboi2222.github.io/games/drift-hunters/', '_blank')">Play Now 🎮</button>
+                </div>
+                <div class="card card-other8" data-name="slope">
+                    <div class="card-icon">⛰️</div>
+                    <h3>Slope</h3>
+                    <p>Roll down the slope and avoid obstacles!</p>
+                    <button class="play-button" onclick="window.open('https://nintendoboi2222.github.io/games/slope/', '_blank')">Play Now 🎮</button>
+                </div>
+                <div class="card card-other9" data-name="idle breakout">
+                    <div class="card-icon">🧱</div>
+                    <h3>Idle Breakout</h3>
+                    <p>Break bricks and upgrade your balls!</p>
+                    <button class="play-button" onclick="window.open('https://nintendoboi2222.github.io/games/idle-breakout/', '_blank')">Play Now 🎮</button>
+                </div>
+                <div class="card card-other10" data-name="snow rider">
+                    <div class="card-icon">⛷️</div>
+                    <h3>Snow Rider</h3>
+                    <p>Ride down snowy slopes at high speed</p>
+                    <button class="play-button" onclick="window.open('https://nintendoboi2222.github.io/games/snow-rider/', '_blank')">Play Now 🎮</button>
+                </div>
+                <div class="card card-other11" data-name="superhot">
+                    <div class="card-icon">🎮</div>
+                    <h3>Superhot</h3>
+                    <p>Time moves only when you move!</p>
+                    <button class="play-button" onclick="window.open('https://nintendoboi2222.github.io/games/superhot/', '_blank')">Play Now 🎮</button>
+                </div>
+                <div class="card card-other12" data-name="moto x3m">
+                    <div class="card-icon">🏍️</div>
+                    <h3>Moto X3M</h3>
+                    <p>Race through extreme obstacle courses!</p>
+                    <button class="play-button" onclick="window.open('https://nintendoboi2222.github.io/games/moto-x3m/', '_blank')">Play Now 🎮</button>
+                </div>
+            </div>
+        </section>
+
+        <button class="back-button" onclick="window.location.href='index.html'">🏠 Back to Home</button>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Pug Paradise. Made with pug love and HTML.</p>
+    </footer>
+
+    <script>
+        function searchGames() {
+            const searchTerm = document.getElementById('searchBox').value.toLowerCase();
+            const cards = document.querySelectorAll('.card-grid .card');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const gameName = card.getAttribute('data-name');
+                if (gameName.includes(searchTerm)) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            document.getElementById('gameCount').textContent = visibleCount;
+        }
+    </script>
+</body>
+</html>

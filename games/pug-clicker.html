@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pug Clicker - Pug Paradise</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .game-container {
+            max-width: 1000px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin: 0 auto;
+        }
+
+        .main-area {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        .shop-area {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+        }
+
+        .stats {
+            margin: 1.5rem 0;
+        }
+
+        .stat-item {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: white;
+            padding: 1rem;
+            border-radius: 15px;
+            margin: 0.5rem 0;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        #pugButton {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 5px solid #4facfe;
+            background: linear-gradient(135deg, #ffd89b, #d4a574);
+            font-size: 5rem;
+            cursor: pointer;
+            transition: all 0.1s ease;
+            margin: 2rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 20px rgba(79, 172, 254, 0.4);
+        }
+
+        #pugButton:hover {
+            transform: scale(1.05);
+        }
+
+        #pugButton:active {
+            transform: scale(0.95);
+        }
+
+        .click-effect {
+            position: absolute;
+            color: #4facfe;
+            font-size: 2rem;
+            font-weight: bold;
+            pointer-events: none;
+            animation: floatUp 1s ease-out forwards;
+        }
+
+        @keyframes floatUp {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px);
+            }
+        }
+
+        h2 {
+            color: #4facfe;
+            margin-bottom: 1rem;
+        }
+
+        .upgrade {
+            background: linear-gradient(135deg, #fff, #e0f7fa);
+            border: 2px solid #4facfe;
+            border-radius: 15px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: left;
+        }
+
+        .upgrade-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .upgrade-name {
+            font-weight: bold;
+            color: #00838f;
+            font-size: 1.1rem;
+        }
+
+        .upgrade-count {
+            background: #4facfe;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+        }
+
+        .upgrade-desc {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+        }
+
+        .upgrade-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 0.5rem;
+        }
+
+        .upgrade button {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .upgrade button:hover:not(:disabled) {
+            transform: scale(1.05);
+            box-shadow: 0 3px 10px rgba(79, 172, 254, 0.4);
+        }
+
+        .upgrade button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .cost {
+            color: #00838f;
+            font-weight: bold;
+        }
+
+        .back-button {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .back-button:hover {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .game-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="main-area">
+            <h1>👆 Pug Clicker 🐶</h1>
+            <div class="stats">
+                <div class="stat-item">
+                    Pets: <span id="pets">0</span>
+                </div>
+                <div class="stat-item">
+                    Pets per Second: <span id="petsPerSec">0</span>
+                </div>
+            </div>
+            <div style="position: relative;">
+                <button id="pugButton">🐶</button>
+            </div>
+            <button class="back-button" onclick="window.location.href='../index.html'">Back to Home</button>
+        </div>
+
+        <div class="shop-area">
+            <h2>Upgrade Shop</h2>
+            <div id="upgradesContainer"></div>
+        </div>
+    </div>
+
+    <script>
+        let pets = 0;
+        let petsPerSecond = 0;
+        let petsPerClick = 1;
+
+        const upgrades = [
+            {
+                id: 'cursor',
+                name: 'Extra Finger',
+                desc: '+1 pet per click',
+                baseCost: 10,
+                count: 0,
+                effect: () => petsPerClick++
+            },
+            {
+                id: 'friend',
+                name: 'Pug Friend',
+                desc: '+1 pet per second',
+                baseCost: 50,
+                count: 0,
+                effect: () => petsPerSecond++
+            },
+            {
+                id: 'treats',
+                name: 'Treat Dispenser',
+                desc: '+5 pets per second',
+                baseCost: 200,
+                count: 0,
+                effect: () => petsPerSecond += 5
+            },
+            {
+                id: 'park',
+                name: 'Pug Park',
+                desc: '+20 pets per second',
+                baseCost: 1000,
+                count: 0,
+                effect: () => petsPerSecond += 20
+            },
+            {
+                id: 'daycare',
+                name: 'Pug Daycare',
+                desc: '+50 pets per second',
+                baseCost: 5000,
+                count: 0,
+                effect: () => petsPerSecond += 50
+            },
+            {
+                id: 'paradise',
+                name: 'Pug Paradise',
+                desc: '+200 pets per second',
+                baseCost: 25000,
+                count: 0,
+                effect: () => petsPerSecond += 200
+            }
+        ];
+
+        function getCost(upgrade) {
+            return Math.floor(upgrade.baseCost * Math.pow(1.15, upgrade.count));
+        }
+
+        function updateDisplay() {
+            document.getElementById('pets').textContent = Math.floor(pets).toLocaleString();
+            document.getElementById('petsPerSec').textContent = petsPerSecond.toFixed(1);
+
+            upgrades.forEach(upgrade => {
+                const cost = getCost(upgrade);
+                const button = document.getElementById(`buy-${upgrade.id}`);
+                const costElement = document.getElementById(`cost-${upgrade.id}`);
+                const countElement = document.getElementById(`count-${upgrade.id}`);
+
+                if (button) {
+                    button.disabled = pets < cost;
+                    costElement.textContent = cost.toLocaleString();
+                    countElement.textContent = upgrade.count;
+                }
+            });
+        }
+
+        function buyUpgrade(upgrade) {
+            const cost = getCost(upgrade);
+            if (pets >= cost) {
+                pets -= cost;
+                upgrade.count++;
+                upgrade.effect();
+                updateDisplay();
+                saveGame();
+            }
+        }
+
+        function createUpgradeElement(upgrade) {
+            const div = document.createElement('div');
+            div.className = 'upgrade';
+            div.innerHTML = `
+                <div class="upgrade-header">
+                    <span class="upgrade-name">${upgrade.name}</span>
+                    <span class="upgrade-count" id="count-${upgrade.id}">0</span>
+                </div>
+                <div class="upgrade-desc">${upgrade.desc}</div>
+                <div class="upgrade-footer">
+                    <span class="cost">Cost: <span id="cost-${upgrade.id}">0</span> pets</span>
+                    <button id="buy-${upgrade.id}">Buy</button>
+                </div>
+            `;
+            document.getElementById('upgradesContainer').appendChild(div);
+            document.getElementById(`buy-${upgrade.id}`).addEventListener('click', () => buyUpgrade(upgrade));
+        }
+
+        function showClickEffect(x, y) {
+            const effect = document.createElement('div');
+            effect.className = 'click-effect';
+            effect.textContent = `+${petsPerClick}`;
+            effect.style.left = x + 'px';
+            effect.style.top = y + 'px';
+            document.body.appendChild(effect);
+            setTimeout(() => effect.remove(), 1000);
+        }
+
+        document.getElementById('pugButton').addEventListener('click', (e) => {
+            pets += petsPerClick;
+            updateDisplay();
+            saveGame();
+            showClickEffect(e.clientX, e.clientY);
+        });
+
+        function gameLoop() {
+            pets += petsPerSecond / 10;
+            updateDisplay();
+        }
+
+        function saveGame() {
+            const saveData = {
+                pets,
+                petsPerSecond,
+                petsPerClick,
+                upgrades: upgrades.map(u => ({ id: u.id, count: u.count }))
+            };
+            localStorage.setItem('pugClickerSave', JSON.stringify(saveData));
+        }
+
+        function loadGame() {
+            const saveData = localStorage.getItem('pugClickerSave');
+            if (saveData) {
+                const data = JSON.parse(saveData);
+                pets = data.pets || 0;
+                petsPerSecond = data.petsPerSecond || 0;
+                petsPerClick = data.petsPerClick || 1;
+
+                if (data.upgrades) {
+                    data.upgrades.forEach(saved => {
+                        const upgrade = upgrades.find(u => u.id === saved.id);
+                        if (upgrade) {
+                            upgrade.count = saved.count;
+                        }
+                    });
+                }
+            }
+        }
+
+        upgrades.forEach(createUpgradeElement);
+        loadGame();
+        updateDisplay();
+        setInterval(gameLoop, 100);
+        setInterval(saveGame, 5000);
+    </script>
+</body>
+</html>

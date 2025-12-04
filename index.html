@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pug Paradise - Games, Hacks & Memes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <h1>🐶 PUG PARADISE</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#games">Pug Games</a></li>
+                <li><a href="other-games.html">Other Games</a></li>
+                <li><a href="#hacks">Hacks</a></li>
+                <li><a href="memes.html">Memes</a></li>
+                <li><a href="chatroom.html">Chat</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+            <button class="admin-button" onclick="showAdminLogin()" title="Admin Panel">
+                🔧
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h2>Welcome to Pug Paradise!</h2>
+                <p class="tagline">Where pugs reign supreme with games, hacks, and endless memes</p>
+                <div class="pug-ascii">
+                    <pre>
+        ___
+     .-'   '-.
+    /  o   o  \
+   |     >     |
+   |   \___/   |
+    \  .---.  /
+     '-.___..-'
+    /|       |\
+   (_|  | |  |_)
+      |_| |_|
+</pre>
+                </div>
+                <div class="floating-elements">
+                    <span class="float-emoji">🦴</span>
+                    <span class="float-emoji">🎾</span>
+                    <span class="float-emoji">🐾</span>
+                    <span class="float-emoji delay-1">⭐</span>
+                    <span class="float-emoji delay-2">🌈</span>
+                    <span class="float-emoji delay-3">✨</span>
+                    <span class="float-emoji delay-4">🎨</span>
+                    <span class="float-emoji delay-5">🎪</span>
+                </div>
+                <button class="cta-button" onclick="showPugverseMenu()">Explore the Pugverse ✨</button>
+            </div>
+        </section>
+
+        <section id="games" class="content-section games-section">
+            <h2>🎮 Pug Games 🎮</h2>
+            <div class="card-grid">
+                <div class="card card-game1">
+                    <div class="card-icon">🏃</div>
+                    <h3>Pug Runner</h3>
+                    <p>Help our pug collect treats while avoiding obstacles!</p>
+                    <button class="play-button" onclick="window.location.href='games/pug-runner.html'">Play Now 🎯</button>
+                </div>
+                <div class="card card-game2">
+                    <div class="card-icon">🧠</div>
+                    <h3>Pug Memory Match</h3>
+                    <p>Match adorable pug expressions in this brain game</p>
+                    <button class="play-button" onclick="window.location.href='games/pug-memory.html'">Play Now 🎯</button>
+                </div>
+                <div class="card card-game3">
+                    <div class="card-icon">👆</div>
+                    <h3>Pug Clicker</h3>
+                    <p>Click to pet infinite pugs and unlock upgrades</p>
+                    <button class="play-button" onclick="window.location.href='games/pug-clicker.html'">Play Now 🎯</button>
+                </div>
+                <div class="card card-game4">
+                    <div class="card-icon">🐝</div>
+                    <h3>Pug Survivor 3D <span class="beta-tag">BETA</span></h3>
+                    <p>Fight waves of wasps in 3D! Collect weapons and survive!</p>
+                    <button class="play-button" onclick="window.location.href='games/pug-survivor.html'">Play Now 🎯</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="hacks" class="content-section hacks-section">
+            <h2>💡 Security & Tech Guides 💡</h2>
+            <p class="section-subtitle">Educational resources for authorized security testing and learning</p>
+            <div class="card-grid">
+                <div class="card card-hack1">
+                    <div class="card-icon">🐧</div>
+                    <h3>Kali Linux Setup</h3>
+                    <p>Complete guide to installing and configuring Kali Linux for security testing</p>
+                    <button class="read-button" onclick="window.location.href='hacks/kali-linux-setup.html'">Read Guide 🚀</button>
+                </div>
+                <div class="card card-hack2">
+                    <div class="card-icon">🔍</div>
+                    <h3>Essential Nmap Commands</h3>
+                    <p>Master network scanning with this comprehensive Nmap command reference</p>
+                    <button class="read-button" onclick="window.location.href='hacks/nmap-commands.html'">Read Guide 🚀</button>
+                </div>
+                <div class="card card-hack3">
+                    <div class="card-icon">🛡️</div>
+                    <h3>More Guides Coming Soon</h3>
+                    <p>Stay tuned for penetration testing tips, CTF strategies, and more!</p>
+                    <button class="read-button" disabled style="opacity: 0.5; cursor: not-allowed;">Coming Soon 🔜</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="memes" class="content-section memes-section">
+            <h2>😂 Pug Memes 🤣</h2>
+            <div class="meme-gallery">
+                <div class="meme-placeholder">
+                    <div class="rainbow-text">🎭 Pug Meme Gallery! 🎭</div>
+                    <p>Pugs being derpy, majestic, and everything in between</p>
+                    <div class="meme-emojis">
+                        <span>😎</span><span>🤪</span><span>😍</span><span>🥳</span><span>🤩</span>
+                    </div>
+                    <button class="play-button" onclick="window.location.href='memes.html'" style="margin-top: 1.5rem;">
+                        View Memes 🚀
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="content-section">
+            <h2>About Pug Paradise</h2>
+            <p>This is the ultimate destination for pug lovers who also enjoy gaming, learning cool hacks, and sharing laughs through memes. Built with love by pug enthusiasts, for pug enthusiasts.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Pug Paradise. Made with pug love and HTML.</p>
+    </footer>
+
+    <!-- Pugverse Menu Modal -->
+    <div id="pugverseModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9999; justify-content: center; align-items: center;" onclick="closePugverseMenu()">
+        <div style="background: linear-gradient(135deg, #667eea, #764ba2); padding: 3rem; border-radius: 20px; max-width: 900px; width: 90%; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.5);" onclick="event.stopPropagation()">
+            <h2 style="color: white; margin-bottom: 0.5rem; font-size: 2.5rem;">🌟 Explore the Pugverse 🌟</h2>
+            <p style="color: rgba(255,255,255,0.9); margin-bottom: 2rem;">Your gateway to all things pug!</p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+                <div style="background: rgba(255,255,255,0.15); padding: 2rem; border-radius: 15px; cursor: pointer; transition: all 0.3s ease; border: 2px solid rgba(255,255,255,0.2);" onclick="window.location.href='#games'" onmouseover="this.style.transform='scale(1.05)'; this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.transform='scale(1)'; this.style.background='rgba(255,255,255,0.15)'">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🎮</div>
+                    <h3 style="color: white; margin-bottom: 0.5rem;">Pug Games</h3>
+                    <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">Play our pug-themed games</p>
+                </div>
+
+                <div style="background: rgba(255,255,255,0.15); padding: 2rem; border-radius: 15px; cursor: pointer; transition: all 0.3s ease; border: 2px solid rgba(255,255,255,0.2);" onclick="window.location.href='other-games.html'" onmouseover="this.style.transform='scale(1.05)'; this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.transform='scale(1)'; this.style.background='rgba(255,255,255,0.15)'">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🕹️</div>
+                    <h3 style="color: white; margin-bottom: 0.5rem;">Other Games</h3>
+                    <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">Classic web games</p>
+                </div>
+
+                <div style="background: rgba(255,255,255,0.15); padding: 2rem; border-radius: 15px; cursor: pointer; transition: all 0.3s ease; border: 2px solid rgba(255,255,255,0.2);" onclick="window.location.href='memes.html'" onmouseover="this.style.transform='scale(1.05)'; this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.transform='scale(1)'; this.style.background='rgba(255,255,255,0.15)'">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">😂</div>
+                    <h3 style="color: white; margin-bottom: 0.5rem;">Meme Gallery</h3>
+                    <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">Hilarious pug memes</p>
+                </div>
+
+                <div style="background: rgba(255,255,255,0.15); padding: 2rem; border-radius: 15px; cursor: pointer; transition: all 0.3s ease; border: 2px solid rgba(255,255,255,0.2);" onclick="window.location.href='chatroom.html'" onmouseover="this.style.transform='scale(1.05)'; this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.transform='scale(1)'; this.style.background='rgba(255,255,255,0.15)'">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">💬</div>
+                    <h3 style="color: white; margin-bottom: 0.5rem;">Chat Room</h3>
+                    <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">Chat with pug lovers</p>
+                </div>
+
+                <div style="background: rgba(255,255,255,0.15); padding: 2rem; border-radius: 15px; cursor: pointer; transition: all 0.3s ease; border: 2px solid rgba(255,255,255,0.2);" onclick="window.location.href='#hacks'" onmouseover="this.style.transform='scale(1.05)'; this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.transform='scale(1)'; this.style.background='rgba(255,255,255,0.15)'">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">💡</div>
+                    <h3 style="color: white; margin-bottom: 0.5rem;">Tech Guides</h3>
+                    <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">Learn security & tech</p>
+                </div>
+
+                <div style="background: rgba(255,255,255,0.15); padding: 2rem; border-radius: 15px; cursor: pointer; transition: all 0.3s ease; border: 2px solid rgba(255,255,255,0.2);" onclick="window.location.href='#about'" onmouseover="this.style.transform='scale(1.05)'; this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.transform='scale(1)'; this.style.background='rgba(255,255,255,0.15)'">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">ℹ️</div>
+                    <h3 style="color: white; margin-bottom: 0.5rem;">About</h3>
+                    <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">Learn about us</p>
+                </div>
+            </div>
+
+            <button onclick="closePugverseMenu()" style="background: linear-gradient(135deg, #ff6b6b, #ee5a6f); color: white; border: none; padding: 1rem 2rem; border-radius: 25px; font-size: 1rem; font-weight: bold; cursor: pointer;">
+                Close ✕
+            </button>
+        </div>
+    </div>
+
+    <!-- Admin Login Modal -->
+    <div id="adminLoginModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 10000; justify-content: center; align-items: center;">
+        <div style="background: linear-gradient(135deg, #667eea, #764ba2); padding: 3rem; border-radius: 20px; max-width: 500px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.5);" onclick="event.stopPropagation()">
+            <h2 style="color: white; margin-bottom: 1rem; font-size: 2rem;">🔐 PUG ADMIN PANEL</h2>
+            <p style="color: rgba(255,255,255,0.9); margin-bottom: 1.5rem;">Enter the secret pug code</p>
+            <input type="password" id="adminPasswordInput" placeholder="Enter admin password..." style="width: 100%; padding: 1rem; border: 3px solid #4ecdc4; border-radius: 25px; font-size: 1rem; margin-bottom: 1rem;" onkeypress="if(event.key==='Enter') checkAdminPassword()">
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <button onclick="checkAdminPassword()" style="background: linear-gradient(135deg, #4ecdc4, #44a6c6); color: white; border: none; padding: 1rem 2rem; border-radius: 25px; font-size: 1rem; font-weight: bold; cursor: pointer;">
+                    Submit 🚀
+                </button>
+                <button onclick="closeAdminLogin()" style="background: linear-gradient(135deg, #ff6b6b, #ee5a6f); color: white; border: none; padding: 1rem 2rem; border-radius: 25px; font-size: 1rem; font-weight: bold; cursor: pointer;">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div id="adminPanel" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: linear-gradient(135deg, rgba(20,20,30,0.98), rgba(50,20,70,0.98)); padding: 2rem; border-radius: 20px; max-width: 800px; width: 90%; max-height: 80vh; overflow-y: auto; z-index: 10001; box-shadow: 0 0 50px rgba(102, 126, 234, 0.8), 0 0 100px rgba(240, 147, 251, 0.5); border: 3px solid #4ecdc4;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <h2 style="color: #4ecdc4; margin: 0; font-size: 2rem;">🔧 PUG ADMIN PANEL 🐶</h2>
+            <button onclick="closeAdminPanel()" style="background: #ff6b6b; color: white; border: none; padding: 0.5rem 1rem; border-radius: 10px; font-size: 1.2rem; cursor: pointer; font-weight: bold;">✕</button>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+            <!-- Theme Controls -->
+            <div style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 15px; border: 2px solid rgba(78,205,196,0.3);">
+                <h3 style="color: #ffd700; margin-bottom: 1rem;">🎨 Themes</h3>
+                <button onclick="activateDarkMode()" class="admin-btn">🌙 Dark Mode</button>
+                <button onclick="activateRainbowMode()" class="admin-btn">🌈 Rainbow Mode</button>
+                <button onclick="resetTheme()" class="admin-btn">↺ Reset Theme</button>
+            </div>
+
+            <!-- Animation Controls -->
+            <div style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 15px; border: 2px solid rgba(78,205,196,0.3);">
+                <h3 style="color: #ffd700; margin-bottom: 1rem;">⚡ Animations</h3>
+                <button onclick="speedUpAnimations()" class="admin-btn">⚡ Speed Up</button>
+                <button onclick="slowDownAnimations()" class="admin-btn">🐌 Slow Down</button>
+                <button onclick="stopAnimations()" class="admin-btn">⏸️ Stop All</button>
+            </div>
+
+            <!-- Special Effects -->
+            <div style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 15px; border: 2px solid rgba(78,205,196,0.3);">
+                <h3 style="color: #ffd700; margin-bottom: 1rem;">✨ Effects</h3>
+                <button onclick="triggerConfetti()" class="admin-btn">🎉 Confetti</button>
+                <button onclick="triggerPugRain()" class="admin-btn">🐶 Pug Rain</button>
+                <button onclick="triggerMatrix()" class="admin-btn">🟢 Matrix Mode</button>
+            </div>
+
+            <!-- Text Modifiers -->
+            <div style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 15px; border: 2px solid rgba(78,205,196,0.3);">
+                <h3 style="color: #ffd700; margin-bottom: 1rem;">📝 Text Mods</h3>
+                <button onclick="makeTextBig()" class="admin-btn">🔤 BIG TEXT</button>
+                <button onclick="makeTextWobble()" class="admin-btn">〰️ Wobble</button>
+                <button onclick="makeTextRainbow()" class="admin-btn">🌈 Rainbow</button>
+            </div>
+
+            <!-- Easter Eggs -->
+            <div style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 15px; border: 2px solid rgba(78,205,196,0.3);">
+                <h3 style="color: #ffd700; margin-bottom: 1rem;">🥚 Easter Eggs</h3>
+                <button onclick="secretMessage()" class="admin-btn">💬 Secret Msg</button>
+                <button onclick="pugCounter()" class="admin-btn">🔢 Pug Count</button>
+                <button onclick="playPugSound()" class="admin-btn">🔊 Pug Sound</button>
+            </div>
+
+            <!-- Background Controls -->
+            <div style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 15px; border: 2px solid rgba(78,205,196,0.3);">
+                <h3 style="color: #ffd700; margin-bottom: 1rem;">🖼️ Background</h3>
+                <button onclick="changeBgColor()" class="admin-btn">🎨 Random Color</button>
+                <button onclick="addSnowEffect()" class="admin-btn">❄️ Snow Effect</button>
+                <button onclick="clearEffects()" class="admin-btn">🧹 Clear All</button>
+            </div>
+        </div>
+
+        <div style="margin-top: 2rem; padding: 1rem; background: rgba(255,215,0,0.2); border-radius: 10px; border: 2px solid #ffd700;">
+            <p style="color: #ffd700; text-align: center; margin: 0; font-weight: bold;">👑 You are now the PUG MASTER! 👑</p>
+        </div>
+    </div>
+
+    <style>
+        .admin-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #4ecdc4, #44a6c6);
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .admin-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.5);
+        }
+
+        .pug-rain {
+            position: fixed;
+            font-size: 2rem;
+            animation: fall linear;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        .wobble-text {
+            animation: wobble 0.5s ease-in-out infinite;
+        }
+
+        @keyframes wobble {
+            0%, 100% { transform: rotate(-3deg); }
+            50% { transform: rotate(3deg); }
+        }
+
+        .rainbow-text {
+            background: linear-gradient(45deg, #ff0000, #ff7700, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: rainbowShift 3s ease infinite;
+        }
+
+        @keyframes rainbowShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+
+    <script>
+        const ADMIN_PASSWORD = 'PUGATTACK6767';
+
+        // Pugverse Menu Functions
+        function showPugverseMenu() {
+            document.getElementById('pugverseModal').style.display = 'flex';
+        }
+
+        function closePugverseMenu() {
+            document.getElementById('pugverseModal').style.display = 'none';
+        }
+
+        function showAdminLogin() {
+            document.getElementById('adminLoginModal').style.display = 'flex';
+            setTimeout(() => {
+                document.getElementById('adminPasswordInput').focus();
+            }, 100);
+        }
+
+        function closeAdminLogin() {
+            document.getElementById('adminLoginModal').style.display = 'none';
+            document.getElementById('adminPasswordInput').value = '';
+        }
+
+        function checkAdminPassword() {
+            const password = document.getElementById('adminPasswordInput').value;
+
+            if (password === ADMIN_PASSWORD) {
+                closeAdminLogin();
+                document.getElementById('adminPanel').style.display = 'block';
+                alert('🎉 Welcome to the PUG ADMIN PANEL! You have the power! 🐶');
+            } else {
+                alert('❌ Incorrect password! Nice try, but you need the secret pug code!');
+                document.getElementById('adminPasswordInput').value = '';
+                document.getElementById('adminPasswordInput').focus();
+            }
+        }
+
+        function closeAdminPanel() {
+            document.getElementById('adminPanel').style.display = 'none';
+        }
+
+        // Theme Controls
+        function activateDarkMode() {
+            document.body.style.background = 'linear-gradient(135deg, #1a1a2e, #16213e, #0f3460)';
+            document.body.style.color = '#eee';
+            alert('🌙 Dark Mode Activated!');
+        }
+
+        function activateRainbowMode() {
+            document.body.style.background = 'linear-gradient(135deg, #ff0000, #ff7700, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3)';
+            document.body.style.backgroundSize = '400% 400%';
+            document.body.style.animation = 'rainbowShift 3s ease infinite';
+            alert('🌈 Rainbow Mode Activated!');
+        }
+
+        function resetTheme() {
+            document.body.style.background = 'linear-gradient(135deg, #ffd89b 0%, #19547b 50%, #f093fb 100%)';
+            document.body.style.backgroundSize = '400% 400%';
+            document.body.style.animation = 'gradientShift 15s ease infinite';
+            document.body.style.color = '#3d2817';
+            alert('↺ Theme Reset to Default!');
+        }
+
+        // Animation Controls
+        let animationSpeed = 1;
+
+        function speedUpAnimations() {
+            animationSpeed = 0.3;
+            document.querySelectorAll('*').forEach(el => {
+                el.style.animationDuration = `${parseFloat(getComputedStyle(el).animationDuration) * animationSpeed}s`;
+            });
+            alert('⚡ Animations are now SUPER FAST!');
+        }
+
+        function slowDownAnimations() {
+            animationSpeed = 3;
+            document.querySelectorAll('*').forEach(el => {
+                if (getComputedStyle(el).animationName !== 'none') {
+                    el.style.animationDuration = `${parseFloat(getComputedStyle(el).animationDuration) * animationSpeed}s`;
+                }
+            });
+            alert('🐌 Animations are now in slow motion!');
+        }
+
+        function stopAnimations() {
+            document.querySelectorAll('*').forEach(el => {
+                el.style.animationPlayState = 'paused';
+            });
+            alert('⏸️ All animations stopped!');
+        }
+
+        // Special Effects
+        function triggerConfetti() {
+            const colors = ['🎉', '🎊', '✨', '⭐', '🌟', '💫'];
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.textContent = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.className = 'pug-rain';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    confetti.style.top = '-50px';
+                    document.body.appendChild(confetti);
+                    setTimeout(() => confetti.remove(), 5000);
+                }, i * 50);
+            }
+            alert('🎉 CONFETTI EXPLOSION!');
+        }
+
+        function triggerPugRain() {
+            const pugs = ['🐶', '🐕', '🦮', '🐩', '🐾'];
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const pug = document.createElement('div');
+                    pug.textContent = pugs[Math.floor(Math.random() * pugs.length)];
+                    pug.className = 'pug-rain';
+                    pug.style.left = Math.random() * 100 + 'vw';
+                    pug.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                    pug.style.top = '-50px';
+                    document.body.appendChild(pug);
+                    setTimeout(() => pug.remove(), 6000);
+                }, i * 100);
+            }
+            alert('🐶 IT\'S RAINING PUGS!');
+        }
+
+        function triggerMatrix() {
+            document.body.style.background = '#000';
+            document.body.style.color = '#00ff00';
+            const chars = '01アイウエオカキクケコサシスセソタチツテト';
+            const columns = Math.floor(window.innerWidth / 20);
+
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    const char = document.createElement('div');
+                    char.textContent = chars.charAt(Math.floor(Math.random() * chars.length));
+                    char.style.position = 'fixed';
+                    char.style.left = Math.random() * 100 + 'vw';
+                    char.style.top = Math.random() * 100 + 'vh';
+                    char.style.color = '#00ff00';
+                    char.style.fontSize = '1.5rem';
+                    char.style.opacity = Math.random();
+                    char.style.zIndex = '9998';
+                    document.body.appendChild(char);
+                    setTimeout(() => char.remove(), 3000);
+                }, i * 30);
+            }
+            alert('🟢 ENTERING THE MATRIX...');
+        }
+
+        // Text Modifiers
+        function makeTextBig() {
+            document.querySelectorAll('h1, h2, h3, p, a, button, span').forEach(el => {
+                el.style.fontSize = '2em';
+            });
+            alert('🔤 EVERYTHING IS BIG NOW!');
+        }
+
+        function makeTextWobble() {
+            document.querySelectorAll('h1, h2, h3').forEach(el => {
+                el.classList.add('wobble-text');
+            });
+            alert('〰️ Text is now wobbly!');
+        }
+
+        function makeTextRainbow() {
+            document.querySelectorAll('h1, h2, h3').forEach(el => {
+                el.classList.add('rainbow-text');
+            });
+            alert('🌈 Rainbow text activated!');
+        }
+
+        // Easter Eggs
+        function secretMessage() {
+            alert('🐶 SECRET PUG MESSAGE: The pugs are planning world domination... but first, treats! 🦴');
+        }
+
+        function pugCounter() {
+            const bodyText = document.body.innerText.toLowerCase();
+            const pugCount = (bodyText.match(/pug/g) || []).length;
+            alert(`🔢 The word "pug" appears ${pugCount} times on this page! That's a lot of pugs! 🐶`);
+        }
+
+        function playPugSound() {
+            const sounds = ['WOOF!', 'ARF ARF!', 'SNORT!', '*heavy breathing*', 'BORK BORK!'];
+            const sound = sounds[Math.floor(Math.random() * sounds.length)];
+            const soundDiv = document.createElement('div');
+            soundDiv.textContent = sound;
+            soundDiv.style.position = 'fixed';
+            soundDiv.style.top = '50%';
+            soundDiv.style.left = '50%';
+            soundDiv.style.transform = 'translate(-50%, -50%)';
+            soundDiv.style.fontSize = '5rem';
+            soundDiv.style.fontWeight = 'bold';
+            soundDiv.style.color = '#ffd700';
+            soundDiv.style.textShadow = '0 0 20px #ff6b35';
+            soundDiv.style.zIndex = '10002';
+            soundDiv.style.animation = 'wobble 0.5s ease-in-out';
+            document.body.appendChild(soundDiv);
+            setTimeout(() => soundDiv.remove(), 1500);
+        }
+
+        // Background Controls
+        function changeBgColor() {
+            const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f093fb', '#ffd89b', '#19547b', '#764ba2'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            document.body.style.background = randomColor;
+            alert(`🎨 Background changed to a random color!`);
+        }
+
+        function addSnowEffect() {
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const snowflake = document.createElement('div');
+                    snowflake.textContent = '❄️';
+                    snowflake.className = 'pug-rain';
+                    snowflake.style.left = Math.random() * 100 + 'vw';
+                    snowflake.style.animationDuration = (Math.random() * 3 + 5) + 's';
+                    snowflake.style.top = '-50px';
+                    document.body.appendChild(snowflake);
+                    setTimeout(() => snowflake.remove(), 10000);
+                }, i * 100);
+            }
+            alert('❄️ Let it snow, let it snow, let it snow!');
+        }
+
+        function clearEffects() {
+            document.querySelectorAll('.pug-rain').forEach(el => el.remove());
+            document.querySelectorAll('.wobble-text').forEach(el => el.classList.remove('wobble-text'));
+            document.querySelectorAll('.rainbow-text').forEach(el => el.classList.remove('rainbow-text'));
+            document.querySelectorAll('*').forEach(el => {
+                el.style.animationPlayState = 'running';
+            });
+            resetTheme();
+            alert('🧹 All effects cleared!');
+        }
+
+        // Close modals with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeAdminPanel();
+                closeAdminLogin();
+                closePugverseMenu();
+            }
+        });
+    </script>
+</body>
+</html>

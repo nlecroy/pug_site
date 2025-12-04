@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pug Memes - Pug Paradise</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .memes-header {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 230, 200, 0.95) 100%);
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            margin-bottom: 2rem;
+        }
+
+        .memes-header h1 {
+            font-size: 3rem;
+            background: linear-gradient(45deg, #ff6b35, #f093fb, #19547b);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: colorFlow 3s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        .add-meme-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+        }
+
+        .add-meme-form {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .meme-input {
+            flex: 1;
+            padding: 1rem;
+            border: 3px solid #4ecdc4;
+            border-radius: 25px;
+            font-size: 1rem;
+        }
+
+        .add-button {
+            background: linear-gradient(135deg, #ff6b35, #f093fb);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .add-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.5);
+        }
+
+        .search-filter {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+            padding: 1rem;
+            border: 3px solid #4ecdc4;
+            border-radius: 25px;
+            font-size: 1rem;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid #4ecdc4;
+            background: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: #4ecdc4;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .memes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .meme-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .meme-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .meme-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            cursor: pointer;
+        }
+
+        .meme-info {
+            padding: 1rem;
+        }
+
+        .meme-caption {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .meme-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .like-button {
+            background: linear-gradient(135deg, #ff6b35, #f093fb);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .like-button:hover {
+            transform: scale(1.1);
+        }
+
+        .like-button.liked {
+            background: linear-gradient(135deg, #ff0000, #ff6b35);
+            animation: heartbeat 0.5s;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .delete-button {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .delete-button:hover {
+            background: #cc0000;
+            transform: scale(1.05);
+        }
+
+        .meme-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            font-size: 3rem;
+            color: white;
+            cursor: pointer;
+            background: rgba(0,0,0,0.5);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .close-modal:hover {
+            background: rgba(255,0,0,0.8);
+            transform: rotate(90deg);
+        }
+
+        .stats {
+            text-align: center;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 15px;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .no-memes {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #666;
+            font-size: 1.3rem;
+        }
+
+        .category-tag {
+            display: inline-block;
+            background: #4ecdc4;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <h1>🐶 PUG PARADISE</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#games">Pug Games</a></li>
+                <li><a href="other-games.html">Other Games</a></li>
+                <li><a href="index.html#hacks">Hacks</a></li>
+                <li><a href="memes.html">Memes</a></li>
+                <li><a href="chatroom.html">Chat</a></li>
+                <li><a href="index.html#about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="memes-header">
+            <h1>😂 Pug Meme Gallery 🤣</h1>
+            <p style="color: #666; font-size: 1.2rem;">The ultimate collection of pug humor!</p>
+        </div>
+
+        <div class="add-meme-section">
+            <h2 style="color: #ff6b35; margin-bottom: 1rem;">➕ Add Your Own Meme</h2>
+            <div class="add-meme-form">
+                <input type="text" class="meme-input" id="memeUrl" placeholder="Paste image URL here...">
+                <input type="text" class="meme-input" id="memeCaption" placeholder="Add a funny caption...">
+                <select class="meme-input" id="memeCategory" style="cursor: pointer;">
+                    <option value="funny">😂 Funny</option>
+                    <option value="cute">😍 Cute</option>
+                    <option value="derp">🤪 Derpy</option>
+                </select>
+                <button class="add-button" onclick="addMeme()">Add Meme 🚀</button>
+            </div>
+            <p style="color: #666; font-size: 0.9rem;">💡 Tip: Right-click any image online → Copy image address → Paste here!</p>
+        </div>
+
+        <div style="text-align: center; margin: 1.5rem 0;">
+            <button class="add-button" id="unlockButton" onclick="showPasswordPrompt()" style="background: linear-gradient(135deg, #ff6b35, #e74c3c);">
+                🔒 Unlock Delete Mode
+            </button>
+            <button class="add-button" id="lockButton" onclick="lockDeleteMode()" style="background: linear-gradient(135deg, #95a5a6, #7f8c8d); display: none;">
+                🔓 Lock Delete Mode
+            </button>
+        </div>
+
+        <div class="search-filter">
+            <input type="text" class="search-box" id="searchBox" placeholder="🔍 Search memes..." onkeyup="filterMemes()">
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterByCategory('all')">All</button>
+                <button class="filter-btn" onclick="filterByCategory('funny')">Funny</button>
+                <button class="filter-btn" onclick="filterByCategory('cute')">Cute</button>
+                <button class="filter-btn" onclick="filterByCategory('derp')">Derpy</button>
+                <button class="filter-btn" onclick="filterByCategory('most-liked')">❤️ Most Liked</button>
+            </div>
+        </div>
+
+        <div class="stats" id="stats">
+            📊 Total Memes: 0 | ❤️ Total Likes: 0
+        </div>
+
+        <div class="memes-grid" id="memesGrid">
+            <div class="no-memes">
+                <h2>🐶 No memes yet!</h2>
+                <p>Be the first to add a pug meme above!</p>
+            </div>
+        </div>
+
+        <button class="back-button" onclick="window.location.href='index.html'" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 1rem 2rem; border-radius: 25px; font-size: 1rem; font-weight: bold; cursor: pointer; margin: 2rem auto; display: block;">
+            🏠 Back to Home
+        </button>
+    </main>
+
+    <div class="meme-modal" id="memeModal" onclick="closeModal()">
+        <span class="close-modal">×</span>
+        <img src="" alt="Meme" class="modal-content" id="modalImage">
+    </div>
+
+    <div class="meme-modal" id="passwordModal" style="display: none;">
+        <div style="background: white; padding: 3rem; border-radius: 20px; max-width: 500px; text-align: center;" onclick="event.stopPropagation()">
+            <h2 style="color: #ff6b35; margin-bottom: 1rem;">🔐 Enter Password</h2>
+            <p style="color: #666; margin-bottom: 1.5rem;">Enter the admin password to unlock delete mode</p>
+            <input type="password" id="passwordInput" class="meme-input" placeholder="Enter password..." style="width: 100%; margin-bottom: 1rem;" onkeypress="if(event.key==='Enter') checkPassword()">
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <button class="add-button" onclick="checkPassword()">Submit 🔓</button>
+                <button class="add-button" onclick="closePasswordModal()" style="background: linear-gradient(135deg, #95a5a6, #7f8c8d);">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Pug Paradise. Made with pug love and HTML.</p>
+    </footer>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAPHVHk397y7MpeEZFPuskOqp-IEdiRJ5k",
+            authDomain: "pug-31646.firebaseapp.com",
+            databaseURL: "https://pug-31646-default-rtdb.firebaseio.com",
+            projectId: "pug-31646",
+            storageBucket: "pug-31646.firebasestorage.app",
+            messagingSenderId: "278556306232",
+            appId: "1:278556306232:web:7a82def7c10a1c22f2afcd",
+            measurementId: "G-2TBFS939SL"
+        };
+
+        // Initialize Firebase with fallback
+        let useFirebase = false;
+        let database, memesRef, likesRef;
+
+        try {
+            console.log('🔥 Initializing Firebase...');
+            firebase.initializeApp(firebaseConfig);
+            database = firebase.database();
+            memesRef = database.ref('memes');
+            likesRef = database.ref('likes');
+            useFirebase = true;
+            console.log('✅ Firebase initialized successfully!');
+        } catch (error) {
+            console.warn('⚠️ Firebase not available, using localStorage fallback:', error);
+            useFirebase = false;
+        }
+
+        let memes = [];
+        let currentFilter = 'all';
+        let likedMemes = new Set();
+        let deleteUnlocked = false;
+        const ADMIN_PASSWORD = 'ITSBUBBA';
+
+        // Start with empty gallery - users can add their own memes!
+        const defaultMemes = [];
+
+        function loadMemes() {
+            if (useFirebase) {
+                console.log('🔥 Firebase: Attempting to connect to Realtime Database...');
+
+                // Set up real-time listener for memes
+                memesRef.on('value', (snapshot) => {
+                    console.log('🔥 Firebase: Memes data received', snapshot.val());
+                    const data = snapshot.val();
+                    if (data) {
+                        // Convert Firebase object to array
+                        memes = Object.keys(data).map(key => ({
+                            ...data[key],
+                            id: parseInt(key)
+                        }));
+                        console.log('✅ Firebase: Loaded', memes.length, 'memes');
+                    } else {
+                        memes = [...defaultMemes];
+                        console.log('ℹ️ Firebase: No memes in database, starting fresh');
+                    }
+                    displayMemes();
+                }, (error) => {
+                    console.error('❌ Firebase Error, switching to localStorage:', error);
+                    useFirebase = false;
+                    loadMemesFromLocalStorage();
+                });
+
+                // Set up real-time listener for likes
+                likesRef.on('value', (snapshot) => {
+                    console.log('🔥 Firebase: Likes data received', snapshot.val());
+                    const data = snapshot.val();
+                    if (data) {
+                        likedMemes = new Set(Object.keys(data).map(k => parseInt(k)));
+                    } else {
+                        likedMemes = new Set();
+                    }
+                    displayMemes();
+                }, (error) => {
+                    console.error('❌ Firebase Error (likes):', error);
+                });
+            } else {
+                loadMemesFromLocalStorage();
+            }
+        }
+
+        function loadMemesFromLocalStorage() {
+            console.log('📦 Loading from localStorage...');
+            const saved = localStorage.getItem('pugMemes');
+            if (saved) {
+                memes = JSON.parse(saved);
+                console.log('✅ Loaded', memes.length, 'memes from localStorage');
+            } else {
+                memes = [...defaultMemes];
+            }
+
+            const savedLikes = localStorage.getItem('likedMemes');
+            if (savedLikes) {
+                likedMemes = new Set(JSON.parse(savedLikes));
+            }
+
+            displayMemes();
+        }
+
+        function saveMemes() {
+            if (useFirebase) {
+                // Convert memes array to object with IDs as keys
+                const memesObject = {};
+                memes.forEach(meme => {
+                    memesObject[meme.id] = meme;
+                });
+
+                console.log('💾 Firebase: Saving memes...', memesObject);
+                memesRef.set(memesObject)
+                    .then(() => {
+                        console.log('✅ Firebase: Memes saved successfully!');
+                    })
+                    .catch((error) => {
+                        console.error('❌ Firebase: Error saving memes, using localStorage:', error);
+                        useFirebase = false;
+                        saveMemesToLocalStorage();
+                    });
+            } else {
+                saveMemesToLocalStorage();
+            }
+        }
+
+        function saveMemesToLocalStorage() {
+            localStorage.setItem('pugMemes', JSON.stringify(memes));
+            console.log('💾 Saved to localStorage');
+        }
+
+        function saveLikedMemes() {
+            if (useFirebase) {
+                // Convert likedMemes set to object
+                const likesObject = {};
+                likedMemes.forEach(id => {
+                    likesObject[id] = true;
+                });
+                likesRef.set(likesObject);
+            } else {
+                localStorage.setItem('likedMemes', JSON.stringify([...likedMemes]));
+            }
+        }
+
+        function addMeme() {
+            const urlInput = document.getElementById('memeUrl');
+            const captionInput = document.getElementById('memeCaption');
+            const categoryInput = document.getElementById('memeCategory');
+
+            const url = urlInput.value.trim();
+            const caption = captionInput.value.trim();
+            const category = categoryInput.value;
+
+            if (!url) {
+                alert('Please enter an image URL!');
+                return;
+            }
+
+            // Check for duplicate URL
+            if (memes.some(m => m.url === url)) {
+                alert('This meme has already been added! 🐶');
+                return;
+            }
+
+            const newMeme = {
+                url: url,
+                caption: caption || 'Untitled Meme',
+                category: category,
+                likes: 0,
+                id: Date.now()
+            };
+
+            memes.unshift(newMeme);
+            saveMemes();
+            displayMemes();
+
+            urlInput.value = '';
+            captionInput.value = '';
+            categoryInput.value = 'funny';
+
+            alert('Meme added! 🎉');
+        }
+
+        function deleteMeme(id) {
+            if (!deleteUnlocked) {
+                alert('🔒 Delete mode is locked! Click "Unlock Delete Mode" button and enter the password.');
+                return;
+            }
+
+            if (confirm('Delete this meme permanently?')) {
+                memes = memes.filter(m => m.id !== id);
+                saveMemes();
+                displayMemes();
+            }
+        }
+
+        function likeMeme(id) {
+            // Check if already liked
+            if (likedMemes.has(id)) {
+                alert('You already liked this meme! 💖');
+                return;
+            }
+
+            const meme = memes.find(m => m.id === id);
+            if (meme) {
+                meme.likes++;
+                likedMemes.add(id);
+                saveMemes();
+                saveLikedMemes();
+                displayMemes();
+            }
+        }
+
+        function displayMemes() {
+            const grid = document.getElementById('memesGrid');
+
+            if (memes.length === 0) {
+                grid.innerHTML = `
+                    <div class="no-memes">
+                        <h2>🐶 No memes yet!</h2>
+                        <p>Be the first to add a pug meme above!</p>
+                    </div>
+                `;
+                updateStats();
+                return;
+            }
+
+            let filteredMemes = [...memes];
+
+            // Apply category filter
+            if (currentFilter === 'most-liked') {
+                filteredMemes.sort((a, b) => b.likes - a.likes);
+            } else if (currentFilter !== 'all') {
+                filteredMemes = filteredMemes.filter(m => m.category === currentFilter);
+            }
+
+            // Apply search filter
+            const searchTerm = document.getElementById('searchBox').value.toLowerCase();
+            if (searchTerm) {
+                filteredMemes = filteredMemes.filter(m =>
+                    m.caption.toLowerCase().includes(searchTerm)
+                );
+            }
+
+            if (filteredMemes.length === 0) {
+                grid.innerHTML = `
+                    <div class="no-memes">
+                        <h2>😕 No memes found</h2>
+                        <p>Try a different search or filter!</p>
+                    </div>
+                `;
+                updateStats();
+                return;
+            }
+
+            grid.innerHTML = filteredMemes.map(meme => {
+                const isLiked = likedMemes.has(meme.id);
+                const likedClass = isLiked ? 'liked' : '';
+
+                // Add emoji to category display
+                const categoryEmojis = {
+                    'funny': '😂',
+                    'cute': '😍',
+                    'derp': '🤪'
+                };
+                const categoryDisplay = `${categoryEmojis[meme.category] || ''} ${meme.category.charAt(0).toUpperCase() + meme.category.slice(1)}`;
+
+                // Style delete button based on unlock status
+                const deleteButtonStyle = deleteUnlocked ? '' : 'opacity: 0.5; cursor: not-allowed;';
+                const deleteIcon = deleteUnlocked ? '🗑️' : '🔒';
+
+                return `
+                <div class="meme-card">
+                    <img src="${meme.url}" alt="${meme.caption}" class="meme-image"
+                         onclick="openModal('${meme.url}')"
+                         onerror="this.src='https://via.placeholder.com/300x300?text=Image+Not+Found'">
+                    <div class="meme-info">
+                        <div class="meme-caption">${meme.caption}</div>
+                        <span class="category-tag">${categoryDisplay}</span>
+                        <div class="meme-actions">
+                            <button class="like-button ${likedClass}" onclick="likeMeme(${meme.id})">
+                                ❤️ ${meme.likes}
+                            </button>
+                            <button class="delete-button" onclick="deleteMeme(${meme.id})" style="${deleteButtonStyle}">
+                                ${deleteIcon}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `}).join('');
+
+            updateStats();
+        }
+
+        function updateStats() {
+            const totalLikes = memes.reduce((sum, m) => sum + m.likes, 0);
+            document.getElementById('stats').innerHTML = `
+                📊 Total Memes: ${memes.length} | ❤️ Total Likes: ${totalLikes}
+            `;
+        }
+
+        function filterByCategory(category) {
+            currentFilter = category;
+
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            displayMemes();
+        }
+
+        function filterMemes() {
+            displayMemes();
+        }
+
+        function openModal(url) {
+            const modal = document.getElementById('memeModal');
+            const img = document.getElementById('modalImage');
+            img.src = url;
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('memeModal').style.display = 'none';
+        }
+
+        // Close modal on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+                closePasswordModal();
+            }
+        });
+
+        // Password modal functions
+        function showPasswordPrompt() {
+            document.getElementById('passwordModal').style.display = 'flex';
+            document.getElementById('passwordInput').value = '';
+            setTimeout(() => {
+                document.getElementById('passwordInput').focus();
+            }, 100);
+        }
+
+        function closePasswordModal() {
+            document.getElementById('passwordModal').style.display = 'none';
+            document.getElementById('passwordInput').value = '';
+        }
+
+        function checkPassword() {
+            const password = document.getElementById('passwordInput').value;
+
+            if (password === ADMIN_PASSWORD) {
+                deleteUnlocked = true;
+                document.getElementById('unlockButton').style.display = 'none';
+                document.getElementById('lockButton').style.display = 'inline-block';
+                closePasswordModal();
+                alert('✅ Delete mode unlocked! You can now delete memes.');
+                displayMemes(); // Refresh display to show delete buttons as active
+            } else {
+                alert('❌ Incorrect password! Try again.');
+                document.getElementById('passwordInput').value = '';
+                document.getElementById('passwordInput').focus();
+            }
+        }
+
+        function lockDeleteMode() {
+            deleteUnlocked = false;
+            document.getElementById('unlockButton').style.display = 'inline-block';
+            document.getElementById('lockButton').style.display = 'none';
+            alert('🔒 Delete mode locked!');
+            displayMemes(); // Refresh display
+        }
+
+        loadMemes();
+    </script>
+</body>
+</html>
