@@ -1,0 +1,22 @@
+{
+  "name": "pug_site",
+  "version": "1.0.0",
+  "description": "Pug Paradise - A real-time pug-themed website with games, memes, and hacks",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://local_proxy@127.0.0.1:60077/git/nlecroy/pug_site"
+  },
+  "keywords": ["pug", "games", "memes", "websocket", "realtime"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0",
+    "multer": "^2.0.2",
+    "socket.io": "^4.8.1"
+  }
+}
